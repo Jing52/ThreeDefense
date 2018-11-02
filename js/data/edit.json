@@ -1,0 +1,19 @@
+{
+	"total":1,
+	"rows":[
+		{
+			"EDIT_NAME":"xxx地区紧急疏散",
+			"EDIT_CON":"尊敬的移动用户，XXX",
+			"EDIT_TIME":"2012-01-01  12:00:22",
+			"EDIT_CREATER":"zjyd",
+			"EDIT_OPERATE":"<span class='win-click' onclick='winWin(1)'>修改</span>&nbsp;&nbsp;<span class='win-click' onclick='winWin(2)'>删除</span>"
+		},
+		{
+			"EDIT_NAME":"xxx地区紧急疏散",
+			"EDIT_CON":"尊敬的移动用户，XXX",
+			"EDIT_TIME":"2012-01-01  12:00:22",
+			"EDIT_CREATER":"zjyd",
+			"EDIT_OPERATE":"<span class='win-click' onclick='winWin(1)'>修改</span>&nbsp;&nbsp;<span class='win-click' onclick='winWin(2)'>删除</span>"
+		}
+	]
+}

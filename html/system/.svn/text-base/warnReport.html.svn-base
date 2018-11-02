@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<title>台风区人流监控预警辅助平台</title>
+		<!-- 引入 Bootstrap -->
+	    <link href="../../js/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	    <link id="link" href="../../css/qs.css" rel="stylesheet" />
+	    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+	    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+	    <!--[if lt IE 9]>
+	    <script src="../../js/html5/html5shiv.js"></script>
+	    <script src="../../js/html5/respond.min.js"></script>
+	    <![endif]-->
+	    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	    <script src="../../js/jquery.min.js"></script>
+	    <!-- 包括所有已编译的插件 -->
+	    <script src="../../js/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+	    <link rel="stylesheet" type="text/css" href="../../js/easyui/themes/default/easyui.css">
+    	<link rel="stylesheet" type="text/css" href="../../js/easyui/themes/icon.css">
+    	<script type='text/javascript' src="../../js/easyui/jquery.easyui.min.js" charset="utf-8"></script>
+		<script type='text/javascript' src="../../js/easyui/locale/easyui-lang-zh_CN.js"></script>
+	</head>
+	<body>
+		<div class="sys-con">
+			<div class="term-con control-con">
+				<div class="sear-con clearfix">
+					<div class="inp left">
+						<label class="inp-name left">市县：</label>
+						<div class="inp-box left">
+							<span class="open">海口<i class="down"></i></span>
+							<div class="slide-con">
+								<p>海口</p>
+								<p>海口2</p>
+							</div>
+						</div>
+					</div>
+					<div class="inp left">
+						<label class="inp-name left">防控区名称：</label>
+						<input type="text" class="inp-input left"/>
+					</div>
+					<div class="inp left">
+						<label class="inp-name left">预警指标：</label>
+						<div class="inp-box left">
+							<span class="open">实时客流量<i class="down"></i></span>
+							<div class="slide-con">
+								<p>实时客流量</p>
+								<p>实时客流量2</p>
+							</div>
+						</div>
+					</div>
+					<div class="inp left">
+						<label class="inp-name left">预警时间：</label>
+						<div class="inp-box left">
+							<p class="left">
+								<input type="text" placeholder="" />
+								<span class="ico"></span>
+							</p>
+							<i class="inp-name left">至</i>
+							<p class="left">
+								<input type="text" placeholder="" />
+								<span class="ico"></span>
+							</p>
+						</div>
+					</div>
+					<div class="inp-btn right">
+						<span class="mybtn">查询</span>
+					</div>
+				</div>
+				<div class="create-con">
+				
+				</div>
+			</div>
+			<div class="table-con">
+				<table id="tableCon"></table>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			var parm = parent.getWH();
+			$('.sys-con').width(parm.w).height(parm.h);
+			var h = parent.$('.back-index').height();
+			$('.sear-con').height(h);
+			var tableh=parm.h-$('.term-con').outerHeight(true)-10;
+			$('.table-con').height(tableh);
+			//下拉选择
+			$('.open').click(function(){
+				$(this).parent().parent().siblings().find('.slide-con').slideUp(300);
+				$(this).next('.slide-con').slideToggle(300);
+				$(this).toggleClass('active');
+				$('.slide-con p').removeClass('active');
+			});
+			$('.slide-con p').click(function(){
+				var txt = $(this).text() + '<i class="down"></i>';
+				$(this).parent().prev('.open').html(txt); 
+				$('.open').removeClass('active');
+				$('.slide-con').slideUp(300);
+			});
+			
+			$('.slide-con p').hover(function(){
+				$(this).addClass('active').siblings().removeClass('active');
+			});
+			//表格数据
+			$('#tableCon').datagrid({
+				url : '',
+	    		method: 'get',
+		        fit: true,
+		        fitColumns: true,
+		        singleSelect: true,
+		        nowrap: true,//数据长度超出列宽时将会自动截取。
+		        rownumbers: false,//行号
+		        pagination: true,
+		        pageNumber: 1,
+		        pageList: [10, 20, 30, 50],
+		        pageSize: 10,
+			    columns: [[
+		            {title: '序号', field: 'WARN_ID', width: 80, hidden: false, align: 'center'},
+	                {title: '归属市县', field: 'WARN_CITY', width: 100, hidden: false, align: 'center'},
+	                {title: '防控区名称', field: 'WARN_CONTROL', width: 120, hidden: false, align: 'center'},
+	                {title: '预警指标', field: 'WARN_INDICATOR', width: 100, hidden: false, align: 'center'},
+	                {title: '预警时间', field: 'WARN_TIME', width: 180, hidden: false, align: 'center'},
+	                {title: '预警指标量', field: 'WARN_NUMBER', width: 100, hidden: false, align: 'center'},
+	                {title: '预警级别', field: 'WARN_LEVEL', width: 120, hidden: false, align: 'center'},
+	                {title: '预警信息', field: 'WARN_INFORMATION', width: 200, hidden: false, align: 'center'},
+		        ]],
+			});
+		});	
+	</script>
+</html>

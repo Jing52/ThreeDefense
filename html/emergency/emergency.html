@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<title>台风区人流监控预警辅助平台</title>
+		<!-- 引入 Bootstrap -->
+	    <link href="../../js/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	    <link id="link" href="../../css/qs.css" rel="stylesheet" />
+	    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+	    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+	    <!--[if lt IE 9]>
+	    <script src="../../js/html5/html5shiv.js"></script>
+	    <script src="../../js/html5/respond.min.js"></script>
+	    <![endif]-->
+	    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	    <script src="../../js/jquery.min.js"></script>
+	    <!-- 包括所有已编译的插件 -->
+	    <script src="../../js/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+		<!--时间轴-->
+		<script type="text/javascript" src="../../js/timeline/js/Date.Format.js"></script>
+	    <script type="text/javascript" src="../../js/timeline/js/timeline_control.js"></script>
+	    <link href="../../js/timeline/css/timeline_consen.css" rel="stylesheet" type="text/css">
+	    <!-- 引入 echarts.js -->
+    	<script src="../../js/echarts/echarts.min.js"></script>
+    	<!--引入百度地图秘钥-->
+    	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=5MBMGE0wCEs9fddZOiBFGZp8"></script>
+    	<script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+	</head>
+	<body>
+		<header class="header container">
+			<div class="row">
+				<div class="logo ft1 left col-sm-4">
+					<span class="logo-img left"></span>
+					<i class="line left"></i>
+					<span class="logo-name left">台风区人流监控预警辅助平台</span>
+				</div>
+				<div class="nav-con left col-sm-6">
+					<ul class="nav clearfix ft3">
+	                    <li><a href="../index/index.html"><span>实时监控</span></a></li>
+	                    <li class="active"><a href="emergency.html"><span>应急预警</span></a></li>
+	                    <li><a href="../history/history.html"><span>历史对比</span></a></li>
+	                    <li><a href="../system/mainPage.html"><span>系统管理</span></a></li>
+	                </ul>
+				</div>
+				<div class="right-con right">
+					<span class="left">用户名</span>
+					<span class="left">|</span>
+					<span class="left">退出</span>
+				</div>
+			</div>
+		</header>
+		<div class="index-con">
+			<div class="iframe-con">
+				<div class="data-con ft6 clearfix">
+					<div class="line left"></div>
+					<div class="date left">
+						<span>2017-11-02</span>
+						<span>12:00</span>
+						<span>全省实时人流:<i>7113452</i>人</span>
+					</div>
+					<div class="line right"></div>
+				</div>
+				<div class="main-con clearfix">
+					<div class="left-map left">
+						<div id="map" style="width: 100%;height:100%;"></div>
+						<div class="map-notice">
+							<img src="../../images/emergency_icon.png" class="left" alt="" />
+							<div class="right">
+								<p>全省防空圈</p>
+								<p><span class="number">122</span>人</p>
+							</div>
+						</div>
+					</div>
+					<div class="right-table right">
+						<div class="rank-con bot bottom-line">
+							<div class="tit">
+								<span class="tit-name ft6">全省各市县防控区</span>
+							</div>
+							<div class="con">
+								<div id="charts1" style="width: 100%;height: 100%;"></div>
+							</div>
+						</div>
+						<div class="trend-con bot">
+							<div class="tit">
+								<span class="tit-name ft6">防控区实时人流</span>
+							</div>
+							<div class="con">
+								<div class="table-con">
+									<div class="list tit-list em-list clearfix">
+										<span>排名</span>
+										<span>市县</span>
+										<span>放空区</span>
+										<span>人口密度（人口/㎡）</span>
+									</div>
+									<div class="list em-list clearfix">
+										<span>1</span>
+										<span>海口</span>
+										<span>秀英港</span>
+										<span>123,321</span>
+									</div>
+									<div class="list em-list clearfix">
+										<span>2</span>
+										<span>三亚</span>
+										<span>三亚港</span>
+										<span>123,321</span>
+									</div>
+									<div class="list em-list clearfix">
+										<span>3</span>
+										<span>文昌</span>
+										<span>清澜港</span>
+										<span>123,321</span>
+									</div>
+									<div class="list em-list clearfix">
+										<span>4</span>
+										<span>万宁</span>
+										<span>后安中学</span>
+										<span>123,321</span>
+									</div>
+									<div class="list em-list clearfix">
+										<span>5</span>
+										<span>陵水</span>
+										<span>陵水火车站</span>
+										<span>123,321</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="source-con bottom-line">
+							<div class="tit">
+								<span class="tit-name ft6">预警记录</span>
+							</div>
+							<div class="con em-warning">
+								<p class="warning">今日预警：<span>12</span></p>
+								<p><span>10:00</span>海口秀英港区域人流接近332,223</p>
+								<p><span>09:30</span>儋州松涛水库区域人流超过332,223</p>
+								<p><span>09:30</span>陵水火车站区域人流接近332,223</p>
+								<p><span>09:00</span>万宁后安中学区域人流接近332,223</p>
+								<p><span>08:30</span>三亚南山景区区域人流接近332,223</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			var h = $(window).height() - $('header').height() - $('.next-nav .nav').height();
+			$('.tab-pane').css({
+				width : $(window).width(),
+				height : h - 2
+			});
+			
+			$('.iframe-con').width($(window).width()).height(h-2);
+			var mh = h-2 - $('.data-con').height();
+			$('.main-con').height(mh);
+			
+			var part = h - 3*$('.right-table .tit').height() - 26;
+			$('.right-table .con').height(part/3);
+			
+			var myFlow1 = echarts.init(document.getElementById('charts1'));
+			option1 = {
+				label:{
+					normal:{
+						show: true,
+						position: 'top',
+			            textStyle: {
+			                color: '#333333',
+			            },
+			            formatter: "{c}"
+					}
+				},
+				grid: {
+			        left: '5%',
+			        right: '5%',
+			        bottom: '15%',
+			        top:'15%',
+			        containLabel: false
+			   },
+			    tooltip: {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b}: {c}"
+			    },
+	            xAxis: [
+	            {
+			        type : 'category',
+	                data: ["海口","三亚","文昌",'琼海','万宁','陵水','儋州'],
+			        axisLine:{
+			  			show: true,
+		                lineStyle:{
+		                    color: '#e9e9e9',
+		                }                         
+		            },
+		            axisTick:{
+		            	show:false
+		            },
+		            axisLabel:{
+	                 //X轴刻度配置
+		                interval:0, //0：表示全部显示不间隔；auto:表示自动根据刻度个数和宽度自动设置间隔个数
+		                textStyle: {
+		                	color:'#333333',
+		                },
+		            },
+	            }],
+	            yAxis: [{
+			        type : 'value',
+	            	show:true,
+	            	axisLine:{
+			  			show: true,
+		                lineStyle:{
+		                    color: '#e9e9e9',
+		                }                         
+		            },
+		            axisTick:{
+		            	show:false
+		            },
+	            	axisLabel: {
+	            		show:false,
+			            textStyle: {
+			                color: '#c5dded'
+			            }
+			        },
+			        splitLine:{
+			        	show:false
+			        }
+	            }],
+	            series: [
+	            {
+	                name: '全省各市县防空区',
+	                type: 'bar',
+	                barWidth: 20,
+	                data: [2, 3, 2, 3, 4,3,4],
+	                itemStyle:{
+	                	normal:{
+		                    color:'#4273a9'
+	                	}
+	                }
+	            }]
+	        };
+			myFlow1.setOption(option1);
+			
+	
+			
+		});	
+		// 百度地图API功能
+		var map = new BMap.Map("map");
+		var point = new BMap.Point(109.605272,19.880101);
+		map.centerAndZoom(point, 10);             // 初始化地图，设置中心点坐标和地图级别
+	    map.enableScrollWheelZoom(); // 允许滚轮缩放
+
+		//判断浏览区是否支持canvas
+	    function isSupportCanvas(){
+	        var elem = document.createElement('canvas');
+	        return !!(elem.getContext && elem.getContext('2d'));
+	    }
+		
+	</script>
+</html>

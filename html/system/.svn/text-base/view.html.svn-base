@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<title>台风区人流监控预警辅助平台</title>
+		<!-- 引入 Bootstrap -->
+	    <link href="../../js/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	    <link id="link" href="../../css/qs.css" rel="stylesheet" />
+	    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+	    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+	    <!--[if lt IE 9]>
+	    <script src="../../js/html5/html5shiv.js"></script>
+	    <script src="../../js/html5/respond.min.js"></script>
+	    <![endif]-->
+	    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	    <script src="../../js/jquery.min.js"></script>
+	    <!-- 包括所有已编译的插件 -->
+	    <script src="../../js/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+	    <link rel="stylesheet" type="text/css" href="../../js/easyui/themes/default/easyui.css">
+    	<link rel="stylesheet" type="text/css" href="../../js/easyui/themes/icon.css">
+    	<script type='text/javascript' src="../../js/easyui/jquery.easyui.min.js" charset="utf-8"></script>
+		<script type='text/javascript' src="../../js/easyui/locale/easyui-lang-zh_CN.js"></script>
+		<!--引入天地图-->
+    	<script src="http://api.tianditu.com/api?v=4.0" type="text/javascript"></script>
+    	<script type="text/javascript" src="http://lbs.tianditu.com/api/js4.0/opensource/openlibrary/HeatmapOverlay.js"></script>
+		<style type="text/css">
+			/*天地图去水印*/
+			.tdt-control-copyright{
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="sys-con">
+			<div class="term-con control-con">
+				<p class="con-tit">基本信息</p>
+				<div class="info-con clearfix">
+					<div class="inp marginl left">
+						<label class="inp-name left"><i class="ora">*</i>区域性质：</label>
+						<input class="inp-input" type="text" />
+					</div>
+					<div class="inp left">
+						<label class="inp-name left"><i class="ora">*</i>防控区名称：</label>
+						<input class="inp-input" type="text" />
+					</div>
+					<div class="inp marginl left">
+						<label class="inp-name left"><i class="ora">*</i>归属县市：</label>
+						<div class="inp-box slide-box marginr left">
+							<input class="inp-input" type="text" />
+						</div>
+						<div class="inp-box slide-box left">
+							<input class="inp-input" type="text" />
+						</div>
+					</div>
+					<div class="inp left">
+						<label class="inp-name left"><i class="ora">*</i>区域类型：</label>
+						<input class="inp-input" type="text" />
+					</div>
+					<div class="inp left">
+						<label class="inp-name left"><i class="ora">*</i>区域圈选：</label>
+						<input class="inp-input" type="text" />
+					</div>
+					<div class="inp inp2">
+						<label class="inp-name left">区域描述：</label>
+						<textarea name="" rows="3"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="inp-map">
+				<div id="map" style="width: 80%;height: 100%;border: 1px solid #959595;margin-left: 10%;"></div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			var parm = parent.getWH();
+			$('.sys-con').width(parm.w).height(parm.h);
+			var h = parent.$('.back-index').height();
+			$('.sear-con').height(h);
+			var tableh=parm.h-$('.term-con').outerHeight(true) - 10;
+			$('.inp-map').height(tableh);
+			
+			//加载地图
+			loadMap();
+		});	
+		function loadMap(){
+			var map;
+	        var zoom = 10;
+            map = new T.Map('map');
+            map.centerAndZoom(new T.LngLat(109.844642,19.252138), zoom);
+	        
+		}
+	</script>
+</html>

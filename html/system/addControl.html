@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<title>台风区人流监控预警辅助平台</title>
+		<!-- 引入 Bootstrap -->
+	    <link href="../../js/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	    <link id="link" href="../../css/qs.css" rel="stylesheet" />
+	    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+	    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+	    <!--[if lt IE 9]>
+	    <script src="../../js/html5/html5shiv.js"></script>
+	    <script src="../../js/html5/respond.min.js"></script>
+	    <![endif]-->
+	    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	    <script src="../../js/jquery.min.js"></script>
+	    <!-- 包括所有已编译的插件 -->
+	    <script src="../../js/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+	    <link rel="stylesheet" type="text/css" href="../../js/easyui/themes/default/easyui.css">
+    	<link rel="stylesheet" type="text/css" href="../../js/easyui/themes/icon.css">
+    	<script type='text/javascript' src="../../js/easyui/jquery.easyui.min.js" charset="utf-8"></script>
+		<script type='text/javascript' src="../../js/easyui/locale/easyui-lang-zh_CN.js"></script>
+	</head>
+	<body>
+		<div class="sys-con">
+			<div class="term-con control-con">
+				<p class="con-tit">基本信息</p>
+				<div class="info-con clearfix">
+					<div class="inp marginl left">
+						<label class="inp-name left"><i class="ora">*</i>区域性质：</label>
+						<div class="inp-box left">
+							<span class="open">场景区域<i class="down"></i></span>
+							<div class="slide-con">
+								<p>场景区域</p>
+								<p>行政区域</p>
+							</div>
+						</div>
+					</div>
+					<div class="inp left">
+						<label class="inp-name left"><i class="ora">*</i>防控区名称：</label>
+						<input class="inp-input" type="text" />
+					</div>
+					<div class="inp marginl left">
+						<label class="inp-name left"><i class="ora">*</i>归属县市：</label>
+						<div class="inp-box slide-box marginr left">
+							<span class="open">请选择<i class="down"></i></span>
+							<div class="slide-con">
+								<p>请选择</p>
+							</div>
+						</div>
+						<div class="inp-box slide-box left">
+							<span class="open">请选择<i class="down"></i></span>
+							<div class="slide-con">
+								<p>请选择</p>
+							</div>
+						</div>
+					</div>
+					<div class="inp left">
+						<label class="inp-name left"><i class="ora">*</i>区域类型：</label>
+						<div class="inp-box left">
+							<span class="open">请选择<i class="down"></i></span>
+							<div class="slide-con">
+								<p>请选择</p>
+							</div>
+						</div>
+					</div>
+					<div class="inp left">
+						<label class="inp-name left"><i class="ora">*</i>区域圈选：</label>
+						<div class="inp-box left">
+							<span id="mapChoose" class="open">地图圈选基站<i class="down"></i></span>
+							<div class="slide-con">
+								<p>地图圈选基站</p>
+								<p>手工导入基站</p>
+							</div>
+							<div class="check mybtn">地图圈选</div>
+							<div class="hide-con clearfix">
+								<input type="file" id="file" style="display: none;" onchange="handleFile()">
+        						<input type="text" class="inp-input left" disabled="disable" value="文件名" id="fileName">
+								<span class="scan mybtn left">浏览</span>
+								<span class="download">下载模板</span>
+							</div>
+						</div>
+					</div>
+					<div class="inp inp2">
+						<label class="inp-name left">区域描述：</label>
+						<textarea name="" rows="5"></textarea>
+					</div>
+					<div class="inp inp2">
+						<span class="mybtn">保存</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		//上传文件保留文件名
+		var file = document.getElementById("file");
+        var fileName = document.getElementById("fileName");
+        function handleFile(){
+        	var val =  file.value.split('\\');
+        	var index = val.length - 1;
+    		var txt = val[index];
+            fileName.value = txt;
+        }
+		$(function(){
+			var parm = parent.getWH();
+			$('.sys-con').width(parm.w).height(parm.h);
+			var h = parent.$('.back-index').height();
+			$('.sear-con').height(h);
+			var tableh=parm.h-$('.term-con').outerHeight(true) - 10;
+			$('.table-con').height(tableh);
+			
+			$('.scan').click(function(){
+				$("#file").click();
+			});
+			
+			//下拉选择
+			$('.open').click(function(){
+				$(this).parent().parent().siblings().find('.slide-con').slideUp(300);
+				$(this).next('.slide-con').slideToggle(300);
+				$(this).toggleClass('active');
+				$('.slide-con p').removeClass('active');
+				
+			});
+			$('.slide-con p').click(function(){
+				var txt = $(this).text() + '<i class="down"></i>';
+				$(this).parent().prev('.open').html(txt); 
+				$('.open').removeClass('active');
+				$('.slide-con').slideUp(300);
+				//区域圈选
+				var tt = $('#mapChoose').text();
+				if(tt == '地图圈选基站'){
+					$('.inp-box .check').show();
+					$('.hide-con').hide();
+				}else{
+					$('.inp-box .check').hide();
+					$('.hide-con').show();
+				}
+			});
+			
+			$('.slide-con p').hover(function(){
+				$(this).addClass('active').siblings().removeClass('active');
+			});
+			
+			$('.inp-box .check').click(function(){
+				parent.showFullmap(1);
+			});
+			
+			
+			//表格数据
+			$('#tableCon').datagrid({
+				url : '',
+	    		method: 'get',
+		        fit: true,
+		        fitColumns: true,
+		        singleSelect: true,
+		        nowrap: true,//数据长度超出列宽时将会自动截取。
+		        rownumbers: false,//行号
+		        pagination: true,
+		        pageNumber: 1,
+		        pageList: [10, 20, 30, 50],
+		        pageSize: 10,
+			    columns: [[
+			    	{title: '全选', field: 'ck', checkbox:true, align: 'center'},
+		            {title: '编码', field: 'INTERFACE_CODE', width: 80, hidden: false, align: 'center'},
+	                {title: '防控区名称', field: 'INTERFACE_NAME', width: 100, hidden: false, align: 'center'},
+	                {title: '区域性质', field: 'INTERFACE_TYPE', width: 120, hidden: false, align: 'center'},
+	                {title: '区域类型', field: 'AGREEMENT_TYPE', width: 100, hidden: false, align: 'center'},
+	                {title: '归属市县', field: 'CREATE_DATE', width: 120, hidden: false, align: 'center'},
+	                {title: '创建时间', field: 'PUBLISH_DATE', width: 100, hidden: false, align: 'center'},
+	                {title: '发布状态', field: 'INTERFACE_STATE', width: 120, hidden: false, align: 'center'}
+		        ]],
+			});
+		});	
+	</script>
+</html>

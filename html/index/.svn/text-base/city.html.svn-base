@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<title>台风区人流监控预警辅助平台</title>
+		<!-- 引入 Bootstrap -->
+	    <link href="../../js/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	    <link id="link" href="../../css/qs.css" rel="stylesheet" />
+	    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+	    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+	    <!--[if lt IE 9]>
+	    <script src="../../js/html5/html5shiv.js"></script>
+	    <script src="../../js/html5/respond.min.js"></script>
+	    <![endif]-->
+	    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	    <script src="../../js/jquery.min.js"></script>
+	    <!-- 包括所有已编译的插件 -->
+	    <script src="../../js/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+	    <!--时间轴-->
+		<script type="text/javascript" src="../../js/timeline/js/Date.Format.js"></script>
+	    <script type="text/javascript" src="../../js/timeline/js/timeline_control.js"></script>
+	    <link href="../../js/timeline/css/timeline_control.css" rel="stylesheet" type="text/css">
+	    <!-- 引入 echarts.js -->
+    	<script src="../../js/echarts/echarts.min.js"></script>
+    	<!--引入百度地图秘钥-->
+    	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=5MBMGE0wCEs9fddZOiBFGZp8"></script>
+    	<script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+		<style>
+			#map label{max-width:none;}
+			#map label span{color:#ffa912;font-size: 15px;margin-right: 3px;}
+		</style>
+	</head>
+	<body>
+		<div class="iframe-con city-con">
+			<div class="data-con ft6 clearfix">
+				<div class="line left"></div>
+				<div class="date left">
+					<span class="left">2017-11-02  12:00</span>
+					<div class="city left">
+						<label class="left">市县：</label>
+						<span class="open left">万宁市<i></i></span>
+						<div class="slide-con">
+							<div class="slide-tit">选择市县：</div>
+							<div class="city-name">
+								<span><i>海口市</i></span>
+								<span><i>三亚市</i></span>
+								<span><i>文昌</i></span>
+								<span><i>琼海</i></span>
+								<span><i class="active">万宁</i></span>
+								<span><i>文昌</i></span>
+								<span><i>琼海</i></span>
+								<span><i>文昌</i></span>
+								<span><i>琼海</i></span>
+								<span><i>文昌</i></span>
+								<span><i>琼海</i></span>
+							</div>
+						</div>
+					</div>
+					<span class="left">实时人流:<i>113452</i>人</span>
+					
+				</div>
+				<div class="line right"></div>
+			</div>
+			<div class="main-con clearfix">
+				<div class="left-map left">
+					<div class="map-nav next-nav">
+						<ul class="nav nav-tabs ft7" role="tablist">
+		                    <li role="presentation" class="active"><a href="#tab1" role="tab" data-toggle="tab" onfocus="this.blur();">实时人流</a></li>
+		                    <li role="presentation"><a href="#tab2" role="tab" data-toggle="tab" onfocus="this.blur();">热力对比</a></li>
+		                </ul>
+		                <div class="tab-content">
+						    <div role="tabpanel" class="tab-pane active" id="tab1">
+						    	<div class="one-map">
+						    		<div id="map" style="width: 100%;height: 100%;"></div>
+						    		<!--时间轴-->
+									<div class="timeline-con">
+										<div class="timebox" style="width: 100%;">
+								    		<div class="timeline" id="timeline">
+								                <div class="time-player">
+								                    <span id="time_play_id" title="正常播放"></span>
+								                </div>
+								                <div class="progress">
+								                    <div class="progress-bar"></div>
+								                </div>
+								                <div class="marker"></div>
+								                <div class="timeline-scale-container">
+								                    <ul class="timeline-scale"></ul>
+								                </div>
+								            </div>
+								    	</div>
+									</div>
+									<!--风向-->
+									<div class="wind-con">
+										<div class="wind-img">
+											<div class="arrow"></div>
+											<div class="info">
+												<p class="clearfix">
+													<span class="line left"></span>
+													<span class="txt ft4 left">台风预警</span>
+													<span class="line right"></span>
+												</p>
+												<div class="cont ft6">2017年第23号热带风暴达维（DAMREY）11月2日12时，风速18米/秒，移速20公里小时，东经117.10°，北纬12.60°位于越南胡志明市偏东方约1170公里的南海东南部海面上，气压998百帕，近中心最大风力8级。</div>
+											</div>
+										</div>
+									</div>
+									<!--颜色控件-->
+									<div class="grad">
+							    		<div class="rect"></div>
+							    		<div class="datenum"><span class="max">1000000</span><span class="min">0</span></div>
+							    	</div>
+							    	<!--局部地图-->
+							    	<div class="map-litter"></div>
+						    	</div>
+						    </div>
+						    <div role="tabpanel" class="tab-pane" id="tab2">
+						    	<iframe id="mapcon" src="fourMap.html" scrolling="no" width="100%" height="100%" frameborder="0"></iframe>
+						    </div>
+						</div>	
+					</div>
+				</div>
+				<div class="right-table right">
+					<div class="rank-con bot">
+						<div class="tit">
+							<span class="tit-name ft6">万宁人口分布排行TOP5</span>
+							<span class="turn-right right" onclick="loadWin(1);">>></span>
+						</div>
+						<div class="con">
+							<div class="table-con">
+								<div class="list tit-list clearfix">
+									<span>区域</span>
+									<span>人数</span>
+									<span>人口密度（人口/㎡）</span>
+								</div>
+								<div class="list clearfix">
+									<span>海口</span>
+									<span>3143330</span>
+									<span>60</span>
+								</div>
+								<div class="list clearfix">
+									<span>海口</span>
+									<span>3143330</span>
+									<span>60</span>
+								</div>
+								<div class="list clearfix">
+									<span>海口</span>
+									<span>3143330</span>
+									<span>60</span>
+								</div>
+								<div class="list clearfix">
+									<span>海口</span>
+									<span>3143330</span>
+									<span>60</span>
+								</div>
+								<div class="list clearfix">
+									<span>海口</span>
+									<span>3143330</span>
+									<span>60</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="trend-con bot">
+						<div class="tit">
+							<span class="tit-name left ft6">人流趋势分析</span>
+							<div class="place right">
+								<span class="open">海口<i></i></span>
+								<div class="slide-con">
+									<p class="active">海口</p>
+									<p>三亚</p>
+									<p>五指山</p>
+								</div>
+							</div>
+						</div>
+						<div class="con">
+							<div class="echart-nav next-nav">
+								<ul class="nav nav-tabs ft7" role="tablist">
+				                    <li role="presentation" class="active"><a href="#day" role="tab" data-toggle="tab" onfocus="this.blur();">24小时</a></li>
+				                    <li role="presentation"><a href="#week" role="tab" data-toggle="tab" onfocus="this.blur();">最近7天</a></li>
+				                </ul>
+				                <div class="tab-content">
+								    <div role="tabpanel" class="tab-pane active" id="day">
+								    	<div id="chart1" style="width: 100%;height: 100%;"></div>
+								    </div>
+								    <div role="tabpanel" class="tab-pane" id="week">
+								    	<div id="chart2" style="width: 100%;height: 100%;"></div>
+								    </div>
+								</div>					
+							</div>
+						</div>
+					</div>
+					<div class="source-con">
+						<div class="tit">
+							<span class="tit-name left ft6">实时人流特征</span>
+							<div class="place right">
+								<span class="open">海口<i></i></span>
+								<div class="slide-con">
+									<p class="active">海口</p>
+									<p>三亚</p>
+									<p>五指山</p>
+								</div>
+							</div>
+						</div>
+						<div class="con">
+							<div class="echart-nav next-nav">
+								<ul class="nav nav-tabs ft7" role="tablist">
+				                    <li role="presentation" class="active"><a href="#sex" role="tab" data-toggle="tab" onfocus="this.blur();">性别</a></li>
+				                    <li role="presentation"><a href="#age" role="tab" data-toggle="tab" onfocus="this.blur();">年龄</a></li>
+				                    <li role="presentation"><a href="#source" role="tab" data-toggle="tab" onfocus="this.blur();">来源</a></li>
+				                </ul>
+				                <div class="tab-content">
+								    <div role="tabpanel" class="tab-pane active" id="sex">
+								    	<div id="chart3" style="width: 100%;height: 100%;"></div>
+								    </div>
+								    <div role="tabpanel" class="tab-pane" id="age">
+								    	<div id="chart4" style="width: 100%;height: 100%;"></div>
+								    </div>
+								    <div role="tabpanel" class="tab-pane" id="source">
+								    	<div id="chart5" style="width: 100%;height: 100%;"></div>
+								    	<span class="search"onclick="loadWin(2);">查看详细>></span>
+								    </div>
+								</div>					
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			var parm = parent.getWH();
+			$('.iframe-con').width(parm.w).height(parm.h);	
+			var h = parm.h - $('.data-con').height()-10;
+			$('.main-con').height(h);
+			var part = h - 3*$('.right-table .tit').height() - 26;
+			$('.right-table .con').height(part/3 - 10);
+			
+			var tab = $('.left-map').height() - $('.map-nav .nav').height();
+			$('.left-map .tab-pane').height(tab);
+			
+			var chartw = $('#chart1').width();
+			var charth = $('#chart1').height();
+			var chartw1 = $('#chart3').width();
+			var charth1 = $('#chart3').height();
+			$('#chart2').width(chartw).height(charth);
+			$('#chart4').width(chartw1).height(charth1);
+			$('#chart5').width(chartw1).height(charth1);
+			
+			//下拉框
+			$('.open').click(function(){
+				$(this).next().toggle();
+			});
+			$('.slide-con p').click(function(){
+				var text = $(this).text() + '<i></i>';
+				$(this).addClass('active').siblings().removeClass('active');
+				$(this).parent().prev('.open').html(text);
+				$(this).parent().hide();
+			});
+			
+			$('.slide-con .city-name i').click(function(){
+				var text = $(this).text() + '<i></i>';
+				$(this).addClass('active').parent().siblings().find('i').removeClass('active');
+				$(this).parent().parent().parent().prev('.open').html(text);
+				$(this).parent().parent().parent().hide();
+			});
+			//台风信息
+			$('.wind-img').hover(function(){
+				$('.arrow').toggle();
+				$('.info').toggle();
+			});
+			//时间轴
+			var timer_line;
+			timer_line = new TimeLine('timeline', {
+		        animateTime: 1000,
+		        onChanged: function (time) {
+		        	
+		        }
+		    });
+		    timer_line.move(0);
+			
+			//加载图表
+			loadChart();
+			//加载地图
+			loadMap();
+		});	
+		function nextWH(){
+			parm = {};
+			parm.w = $('.left-map').width();
+			parm.h = $('.left-map .tab-pane').height();
+			return parm;
+		}
+		//加载地图iframe
+		function mapIframe(n){
+			if(n == 1){
+				$('#mapcon').attr('src','fullMap.html');
+			}else if(n == 2){
+				$('#mapcon').attr('src','fourMap.html');
+			}
+		}
+		//加载弹窗
+		function loadWin(n){
+			if( n == 1){
+				parent.showWin(3);
+			}else if( n == 2){
+				parent.showWin(2);
+			}
+		}
+		//配置图表
+		function loadChart(){
+			//24小时
+			var myFlow1 = echarts.init(document.getElementById('chart1'));
+			var option1 = {
+				grid: {
+			        left: '10%',
+			        right: '8%',
+			        bottom: '30%',
+			        top:'10%',
+			        containLabel: false
+			    },
+			    legend:{
+			    	show:true,
+			    	orient:'horizontal',
+			    	left:'43%',
+			    	bottom:'0%',
+			    	data:['人流量'],
+			    	textStyle:{
+			    		color:'#1f1f1f'
+			    	}
+			    },
+			    tooltip: {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b}: {c}%"
+			    },
+	            xAxis: [
+	            {
+			        type : 'category',
+	                data: ["0:00","1:00","2:00","3:00","4:00","5:00","6:00","7:00","8:00","9:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00","24:00",],
+			        axisLine:{
+			  			show: true,
+		                lineStyle:{
+		                    color: '#666',
+		                }                         
+		            },
+		            axisTick:{
+		            	show:false
+		            },
+		            axisLabel:{
+	                 //X轴刻度配置
+		                interval:1, //0：表示全部显示不间隔；auto:表示自动根据刻度个数和宽度自动设置间隔个数
+		                rotate:30,
+		                textStyle: {
+		                	color:'#666',
+		                	fontSize:12
+		                },
+		            },
+	            }],
+	            yAxis: [{
+			        type : 'value',
+	            	show:true,
+	            	axisLine:{
+			  			show: false,
+		                lineStyle:{
+		                    color: '#666',
+		                }                         
+		            },
+		            axisTick:{
+		            	show:false
+		            },
+	            	axisLabel: {
+	            		show:true,
+			            textStyle: {
+			                color: '#666'
+			            }
+			        }
+	            }],
+	            series: [
+	            {
+	                name: '人流量',
+	                type: 'line',
+	                barWidth: 30,
+	                data: [1520,2531,3354,2218,4483,2587,1520,2531,3354,2218,4483,2587,1520,2531,3354,2218,4483,2587,1520,2531,3354,2218,4483,2587],
+					itemStyle:{
+				        normal:{
+				            color:'#ffa912'
+				        }
+				    },
+	            }]
+		    };
+			myFlow1.setOption(option1);
+			//近1周
+			var myFlow2 = echarts.init(document.getElementById('chart2'));
+			var option2 = {
+				grid: {
+			        left: '10%',
+			        right: '8%',
+			        bottom: '30%',
+			        top:'10%',
+			        containLabel: false
+			    },
+			    legend:{
+			    	show:true,
+			    	orient:'horizontal',
+			    	left:'43%',
+			    	bottom:'0%',
+			    	data:['人流量'],
+			    	textStyle:{
+			    		color:'#1f1f1f'
+			    	}
+			    },
+			    tooltip: {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b}: {c}%"
+			    },
+	            xAxis: [
+	            {
+			        type : 'category',
+	                data: ["10/27","10/28","10/29","10/30","10/31","11/01","11/02"],
+			        axisLine:{
+			  			show: true,
+		                lineStyle:{
+		                    color: '#666',
+		                }                         
+		            },
+		            axisTick:{
+		            	show:false
+		            },
+		            axisLabel:{
+	                 //X轴刻度配置
+		                interval:0, //0：表示全部显示不间隔；auto:表示自动根据刻度个数和宽度自动设置间隔个数
+		                rotate:0,
+		                textStyle: {
+		                	color:'#666',
+		                	fontSize:12
+		                },
+		            },
+	            }],
+	            yAxis: [{
+			        type : 'value',
+	            	show:true,
+	            	axisLine:{
+			  			show: false,
+		                lineStyle:{
+		                    color: '#666',
+		                }                         
+		            },
+		            axisTick:{
+		            	show:false
+		            },
+	            	axisLabel: {
+	            		show:true,
+			            textStyle: {
+			                color: '#666'
+			            }
+			        }
+	            }],
+	            series: [
+	            {
+	                name: '人流量',
+	                type: 'line',
+	                barWidth: 30,
+	                data: [1520,2531,3354,2218,4483,2587,1520],
+					itemStyle:{
+				        normal:{
+				            color:'#ffa912'
+				        }
+				    },
+	            }]
+		    };
+			myFlow2.setOption(option2);
+			//实时人流特征--性别
+			var myFlow3 = echarts.init(document.getElementById('chart3'));
+			var option3 = {
+				title:{
+					text: '男、女比例',
+					textStyle:{
+						color: '#333',
+						fontSize: 13,
+					},
+					left:'40%',
+					top:'10px'
+				},
+				grid: {
+			        left: '10%',
+			        right: '10%',
+			        bottom: '15%',
+			        top:'20%',
+			        containLabel: false
+			   },
+			    tooltip: {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b}: {c}%"
+			    },
+	            yAxis: [
+	            {
+			        type : 'category',
+	                data: ["女性","男性"],
+			        axisLine:{
+			  			show: true,
+		                lineStyle:{
+		                    color: '#333',
+		                }                         
+		            },
+		            axisTick:{
+		            	show:false
+		            },
+		            axisLabel:{
+	                 //X轴刻度配置
+		                interval:0, //0：表示全部显示不间隔；auto:表示自动根据刻度个数和宽度自动设置间隔个数
+		                rotate:0, 
+	            		color:'#333',
+	                    fontSize:12,
+		            },
+	            }],
+	            xAxis: [{
+			        type : 'value',
+	            	show:false,
+	            	axisLabel: {
+	            		show:false,
+			            textStyle: {
+			                color: '#c5dded'
+			            }
+			        }
+	            }],
+	            series: [
+	            {
+	                name: '性别',
+	                type: 'bar',
+	                barWidth:20,
+	                data: [48,52],
+	                label:{
+						normal:{
+							show: true,
+							position: 'right',
+				            textStyle: {
+				                color: '#333',
+				            },
+				            formatter: "{c}%"
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: function(params) {
+							　//首先定义一个数组
+								var colorList = ['#ff1212','#0177ff'];
+								return colorList[params.dataIndex]
+							}, 
+						}
+					}
+	            }]
+		    };
+			myFlow3.setOption(option3);
+			//实时人流特征--年龄
+			var myFlow4 = echarts.init(document.getElementById('chart4'));
+			var option4 = {
+				grid: {
+			        left: '8%',
+			        right: '8%',
+			        bottom: '25%',
+			        top:'10%',
+			        containLabel: false
+			    },
+			    tooltip: {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b}: {c}%"
+			    },
+	            xAxis: [
+	            {
+			        type : 'category',
+	                data: ["19岁以下","19-25岁","25-35岁","35-45岁",'45-55岁','55岁以上'],
+			        axisLine:{
+			  			show: true,
+		                lineStyle:{
+		                    color: '#333',
+		                }                         
+		            },
+		            axisTick:{
+		            	show:false
+		            },
+		            axisLabel:{
+	                 //X轴刻度配置
+		                interval:0, //0：表示全部显示不间隔；auto:表示自动根据刻度个数和宽度自动设置间隔个数
+		                textStyle: {
+		                	color:'#333',
+		                },
+		            },
+	            }],
+	            yAxis: [{
+			        type : 'value',
+	            	show:false,
+	            	axisLabel: {
+	            		show:false,
+			            textStyle: {
+			                color: '#c5dded'
+			            }
+			        }
+	            }],
+	            series: [
+	            {
+	                name: '',
+	                type: 'bar',
+	                barWidth: 25,
+	                data: [0.80,32.97,6.39,43.45,14.36,2.03],
+	                label:{
+						normal:{
+							show: true,
+							position: 'top',
+				            textStyle: {
+				                color: '#333',
+				            },
+				            formatter: "{c}%"
+						}
+					},
+	                itemStyle:{
+				        normal:{
+				            color: "#0077ff"
+				        }
+				    },
+	            }]
+		    };
+			myFlow4.setOption(option4);
+			//实时人流特征--来源
+			var myFlow5 = echarts.init(document.getElementById('chart5'));
+			var option5 = {
+			    tooltip: {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b}: {c}% "
+			    },
+			    legend:{
+			    	show:true,
+			    	orient:'vertical',
+			    	left:'80%',
+			    	top:'25%',
+			    	itemWidth :12,
+			    	itemHeight :12,
+			    	data:['国际','国内','省内','本地'],
+			    	textStyle:{
+			    		color:'#333'
+			    	}
+			    },
+			    series: [
+			        {
+			            name:'来源',
+			            type:'pie',
+			            radius: ['0', '65%'],
+			            center: ['40%', '50%'],
+			            data:[
+			            	{value:16, name:'国际'},
+			                {value:35, name:'国内'},
+			                {value:29, name:'省内'},
+			                {value:20, name:'本地'},
+			            ],
+			            color:['#d25000','#ffa912','#258d8c','#0559a6'],
+			            itemStyle: {
+			            	normal:{
+			            		label: {
+							       show: true,
+							       color: '#fdfdfd',
+                    			   formatter: '{c}%'
+							    },
+			            		labelLine: {
+							       show: false,
+							       length:3
+							    }
+			            	},
+			                emphasis: {
+			                    shadowBlur: 10,
+			                    shadowOffsetX: 0,
+			                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+			                }
+			            }
+			        }
+			    ]
+			}
+			myFlow5.setOption(option5);
+		}
+		//配置地图
+		function loadMap(){
+			var map = new BMap.Map("map");
+		    var heatmapOverlay;
+		    var map_zoom_level = 10;
+			var hot_radius = 80;
+			var point = new BMap.Point(109.844642,19.252138);
+			map.centerAndZoom(point, 10);   
+		    map.enableScrollWheelZoom();
+		    map.setMapStyle({style:'midnight'}); //设置主题样式
+		    
+		    var marker = new BMap.Marker(point);  // 创建标注
+			map.addOverlay(marker);               // 将标注添加到地图中
+		    var opts = {
+			    position : point,    // 指定文本标注所在的地理位置
+			    offset   : new BMap.Size(30, -30)    //设置文本偏移量
+			}
+			var label = new BMap.Label("万宁实时人流：" + '<br />' + "<span>704453</span>" + "人",{offset:new BMap.Size(-30,-60)},opts);
+			label.setStyle({
+				color : "#fff",
+				fontSize : "12px",
+				lineHeight : "25px",
+				fontFamily:"微软雅黑",
+				borderColor:"#93a9b9",
+				borderStyle:"solid",
+				borderRadius:"5px",
+				padding:"0 15px",
+				background:'rgba(0,119,255,.5)'
+			 });
+			marker.setLabel(label);
+			
+			map.addEventListener("zoomend", function () {
+		        setHotRadius(map, heatmapOverlay, map_zoom_level, hot_radius);
+		    });
+		    //根据层级动态调整热力图的半径
+			function setHotRadius(map, heatmapOverlay, map_zoom_level, hot_radius) {
+			    if (heatmapOverlay != null && heatmapOverlay != undefined) {
+			        var zoomDiff = map.getZoom() - map_zoom_level;
+			        if (zoomDiff > 0) {
+			            heatmapOverlay.setOptions({"radius": hot_radius * Math.pow(1.2, zoomDiff), "opacity": 0});
+			            //setGradient();
+			        } else if (zoomDiff < 0) {
+			            heatmapOverlay.setOptions({"radius": hot_radius * Math.pow(0.8, Math.abs(zoomDiff)), "opacity": 0});
+			            //setGradient();
+			        } else {
+			            heatmapOverlay.setOptions({"radius": hot_radius, "opacity": 0});
+			            //setGradient();
+			        }
+			    }
+			}
+			
+			function Convert_mapinfo_To_bd2(lng, lat) {
+			    var point = Convert_mapinfo_To_google(lng, lat);
+			    return Convert_GCJ02_To_BD09(point.lon, point.lat);
+			}
+		   
+		    if(!isSupportCanvas()){
+		    	alert('热力图目前只支持有canvas支持的浏览器,您所使用的浏览器不能使用热力图功能~')
+		    }
+		    var points = [];
+			heatmapOverlay = new BMapLib.HeatmapOverlay({"radius":80,"opacity":0});
+			map.addOverlay(heatmapOverlay);
+			heatmapOverlay.setDataSet({data:points,max:400});
+			heatmapOverlay.show();
+			setGradient();
+			
+		    function setGradient(){
+		     	var gradient = {
+		            .9: 'rgb(255,0,0)',
+		            .8: 'rgb(255,57,0)',
+		            .7: 'rgb(255,112,0)',
+		            .6: 'rgb(255,173,0)',
+		            .5: 'rgb(255,237,0)',
+					.4: 'rgb(209,232,0)',
+					.3: 'rgb(134,195,0)',
+					.2: 'rgb(60,158,0)',
+					.1: 'rgb(107,27,86)'
+		       };
+		        heatmapOverlay.setOptions({"gradient":gradient});
+		    }
+			//判断浏览区是否支持canvas
+		    function isSupportCanvas(){
+		        var elem = document.createElement('canvas');
+		        return !!(elem.getContext && elem.getContext('2d'));
+		    }
+		}
+	</script>
+</html>

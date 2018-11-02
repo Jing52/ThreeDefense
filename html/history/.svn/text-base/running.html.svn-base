@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<title>台风区人流监控预警辅助平台</title>
+		<!-- 引入 Bootstrap -->
+	    <link href="../../js/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	    <link id="link" href="../../css/qs.css" rel="stylesheet" />
+	    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+	    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+	    <!--[if lt IE 9]>
+	    <script src="../../js/html5/html5shiv.js"></script>
+	    <script src="../../js/html5/respond.min.js"></script>
+	    <![endif]-->
+	    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	    <script src="../../js/jquery.min.js"></script>
+	    <!-- 包括所有已编译的插件 -->
+	    <script src="../../js/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+	    <!--时间轴-->
+		<!--<script type="text/javascript" src="../../js/timeline/js/Date.Format.js"></script>-->
+	    <!--<script type="text/javascript" src="../../js/timeline/js/timeline_control.js"></script>-->
+	    <!--<link href="../../js/timeline/css/timeline_consen.css" rel="stylesheet" type="text/css">-->
+	    <!-- 引入 echarts.js -->
+    	<script src="../../js/echarts/echarts.min.js"></script>
+	</head>
+	<body>
+		<div class="iframe-con history-con">
+			<div class="data-con ft6 clearfix">
+				<div class="line left"></div>
+				<div class="date left">
+					<div class="tit left">
+						<span class="left">历史台风：</span>
+						<div class="place wind left">
+							<span class="open">达维台风<i></i></span>
+							<div class="slide-con">
+								<p class="active">达维台风</p>
+								<p>威马逊台风</p>
+							</div>
+						</div>
+					</div>
+					<div class="tit left">
+						<span class="left">市县：</span>
+						<div class="area left">
+							<span class="open">万宁市<i></i></span>
+							<div class="slide-con">
+								<p>请选择市县：</p>
+								<ul>
+									<li>海口市</li>
+									<li>三亚市</li>
+									<li>文昌</li>
+									<li>琼海</li>
+									<li class="active">万宁市</li>
+									<li>陵水</li>
+									<li>澄迈</li>
+									<li>临高</li>
+									<li>儋州</li>
+									<li>沧江</li>
+									<li>乐东</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="tit left">
+						<span class="left">乡镇：</span>
+						<div class="area left">
+							<span class="open">兴隆镇<i></i></span>
+							<div class="slide-con">
+								<p>请选择乡镇：</p>
+								<ul>
+									<li>万城镇</li>
+									<li>东澳镇</li>
+									<li>礼记镇</li>
+									<li>北坡镇</li>
+									<li class="active">兴隆镇</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="tit left">
+						<span class="left">区域：</span>
+						<div class="area left">
+							<span class="open">日月湾景区<i></i></span>
+							<div class="slide-con">
+								<div class="clearfix">
+									<span class="slide-tit left">选择区域类型：</span>
+									<div class="pull-con left">
+										<span class="pull-tit">区域类型<i></i></span>
+										<div class="pull-type">
+											<p class="active">区域类型</p>
+											<p>区域类型2</p>
+										</div>
+									</div>
+								</div>
+								<ul>
+									<li>兴隆热带植物园</li>
+									<li>万宁东山岭</li>
+									<li class="active">万宁日月湾</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="line right"></div>
+			</div>
+			<!--<div class="main-con map-con clearfix">-->
+			
+			<iframe class="first-iframe" src="runningMap.html" scrolling="no" width="100%" height="100%" frameborder="0"></iframe>
+			<!--</div>-->
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			var parm = parent.getWH();
+			$('.iframe-con').width(parm.w).height(parm.h);	
+			var h = parm.h - $('.data-con').height();
+			$('.first-iframe').height(h);
+			
+			//下拉框
+			$('.open').click(function(){
+				$(this).next().toggle();
+				$(this).parent().parent().siblings().find('.slide-con').hide();
+			});
+			$('.place .slide-con p').click(function(){
+				var text = $(this).text() + '<i></i>';
+				$(this).addClass('active').siblings().removeClass('active');
+				$(this).parent().prev('.open').html(text);
+				$(this).parent().hide();
+			});
+			$('.area .slide-con p').click(function(){
+				var text = $(this).text() + '<i></i>';
+				$(this).addClass('active').siblings().removeClass('active');
+				$(this).parent().prev('.open').html(text);
+				$(this).parent().hide();
+			});
+			$('.area .slide-con ul li').click(function(){
+				var text = $(this).text() + '<i></i>';
+				$(this).addClass('active').siblings().removeClass('active');
+				$(this).parent().parent().prev('.open').html(text);
+				$(this).parent().parent().hide();
+			});
+			//区域选择下拉
+			$('.area .pull-con span').click(function(){
+				$(this).next().toggle();
+			});
+			$('.area .pull-con .pull-type p').click(function(){
+				var text = $(this).text() + '<i></i>';
+				$(this).addClass('active').siblings().removeClass('active');
+				$(this).parent().prev('.pull-tit').html(text);
+				$(this).parent().hide();
+			});
+//			$('.open').click(function(){
+//				$(this).parent().parent().children().find('.slide-con').hide();
+//			});
+			//地图点击悬浮样式修改
+			$('.wind-map').hover(function(){
+				$(this).addClass('active');
+			},function(){
+				$(this).removeClass('active');
+			});
+			
+		});
+		function getRWH(){
+			parm={};
+			parm.w = $('.first-iframe').width();
+			parm.h = $('.first-iframe').height();
+			return parm;
+		}
+		
+	</script>
+</html>

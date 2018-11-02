@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<title>台风区人流监控预警辅助平台</title>
+		<!-- 引入 Bootstrap -->
+	    <link href="../../js/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	    <link id="link" href="../../css/qs.css" rel="stylesheet" />
+	    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+	    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+	    <!--[if lt IE 9]>
+	    <script src="../../js/html5/html5shiv.js"></script>
+	    <script src="../../js/html5/respond.min.js"></script>
+	    <![endif]-->
+	    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	    <script src="../../js/jquery.min.js"></script>
+	    <!-- 包括所有已编译的插件 -->
+	    <script src="../../js/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="win">
+			<div class="win-tit">全省各市县人口分布排行<span class="close">×</span></div>
+			<div class="win-con">
+				<div class="table-con">
+					<div class="list tit-list clearfix">
+						<span>区域</span>
+						<span>人数</span>
+						<span>人口密度（人口/㎡）</span>
+					</div>
+					<div class="list clearfix">
+						<span>万城镇</span>
+						<span>3143330</span>
+						<span>60</span>
+					</div>
+					<div class="list clearfix">
+						<span>后安镇</span>
+						<span>3143330</span>
+						<span>60</span>
+					</div>
+					<div class="list clearfix">
+						<span>后安镇</span>
+						<span>3143330</span>
+						<span>60</span>
+					</div>
+					<div class="list clearfix">
+						<span>后安镇</span>
+						<span>3143330</span>
+						<span>60</span>
+					</div>
+					<div class="list clearfix">
+						<span>后安镇</span>
+						<span>3143330</span>
+						<span>60</span>
+					</div>
+				</div>
+				<nav aria-label="Page navigation">
+				    <ul class="pagination right">
+				    	<li>
+				      		<a href="#" aria-label="Previous">
+				       		<span aria-hidden="true">&laquo;</span>
+				      		</a>
+				    	</li>
+					    <li><a href="#">1</a></li>
+					    <li><a href="#">2</a></li>
+					    <li><a href="#">3</a></li>
+					    <li><a href="#">4</a></li>
+					    <li><a href="#">5</a></li>
+				    	<li>
+					     	<a href="#" aria-label="Next">
+					        	<span aria-hidden="true">&raquo;</span>
+					      	</a>
+					    </li>
+				  	</ul>
+				</nav>
+			</div>
+		</div>	
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			$('.close').click(function(){
+				parent.hideWin();
+			});
+			
+		});
+	</script>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<title>台风区人流监控预警辅助平台</title>
+		<!-- 引入 Bootstrap -->
+	    <link href="../../js/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	    <link id="link" href="../../css/qs.css" rel="stylesheet" />
+	    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+	    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+	    <!--[if lt IE 9]>
+	    <script src="../../js/html5/html5shiv.js"></script>
+	    <script src="../../js/html5/respond.min.js"></script>
+	    <![endif]-->
+	    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	    <script src="../../js/jquery.min.js"></script>
+	    <!-- 包括所有已编译的插件 -->
+	    <script src="../../js/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="sys-con">
+			<div class="term-con record-con clearfix">
+				<div class="inp clearfix">
+					<label class="inp-name left">事件名称：</label>
+					<input type="text" class="inp-input inp-event left"/>
+				</div>
+				<div class="inp clearfix">
+					<label class="inp-name left">发送区域：</label>
+					<input type="text" class="inp-input left"/>
+					<label class="inp-name inp-blue left" onclick="loadSelfArea()">自定义发送区域</label>
+				</div>
+				<div class="inp clearfix">
+					<label class="inp-name left">短信模板：</label>
+					<div class="inp-box left">
+						<span class="open">选择模板<i class="down"></i></span>
+						<div class="slide-con">
+							<p>模板1</p>
+							<p>模板2</p>
+						</div>
+					</div>
+					<label class="inp-name inp-blue left" onclick="loadWin(2)">新增模板</label>
+					<label class="inp-name inp-blue left" onclick="loadWin(3)">修改/删除模板</label>
+				</div>
+				<div class="inp clearfix">
+					<label class="inp-name left">短信内容：</label>
+					<textarea name="" class="inp-textarea" rows="" cols=""></textarea>
+				</div>
+				<div class="inp-btn left">
+					<span class="mybtn" onclick="loadWin(4)">提交发送</span>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			var parm = parent.getWH();
+			$('.sys-con').width(parm.w).height(parm.h);
+			var h = parent.$('.back-index').height();
+			$('.sear-con').height(h);
+			var tableh=parm.h-$('.term-con').outerHeight(true)-10;
+			$('.table-con').height(tableh);
+			//下拉选择
+			$('.open').click(function(){
+				$(this).parent().parent().siblings().find('.slide-con').slideUp(300);
+				$(this).next('.slide-con').slideToggle(300);
+				$(this).toggleClass('active');
+				$('.slide-con p').removeClass('active');
+			});
+			$('.slide-con p').click(function(){
+				var txt = $(this).text() + '<i class="down"></i>';
+				$(this).parent().prev('.open').html(txt); 
+				$('.open').removeClass('active');
+				$('.slide-con').slideUp(300);
+			});
+			
+			$('.slide-con p').hover(function(){
+				$(this).addClass('active').siblings().removeClass('active');
+			});
+			
+		});	
+		//加载弹窗页面
+		function loadWin(n){
+			if(n == 1){
+//				parent.showWin();
+			}else if(n == 2){
+				parent.showWin(2);
+			}else if(n == 3){
+				parent.showWin(3);
+			}else if(n == 4){
+				parent.showWin(4);
+			}
+		}
+		//加载自定义选区
+		function loadSelfArea(){
+			parent.showFullmap(2);
+		}
+	</script>
+</html>

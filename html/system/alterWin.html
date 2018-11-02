@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<title>台风区人流监控预警辅助平台</title>
+		<!-- 引入 Bootstrap -->
+	    <link href="../../js/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	    <link id="link" href="../../css/qs.css" rel="stylesheet" />
+	    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+	    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+	    <!--[if lt IE 9]>
+	    <script src="../../js/html5/html5shiv.js"></script>
+	    <script src="../../js/html5/respond.min.js"></script>
+	    <![endif]-->
+	    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	    <script src="../../js/jquery.min.js"></script>
+	    <!-- 包括所有已编译的插件 -->
+	    <script src="../../js/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+		<!-- 引入 echarts.js -->
+    	<script src="../../js/echarts/echarts.min.js"></script>
+	</head>
+	<body>
+		<div class="win info-win">
+			<div class="win-tit">修改短信模板<span class="close">×</span></div>
+			<div class="win-con">
+				<div class="term-con">
+					<div class="inp clearfix">
+						<label class="inp-name left">短信模板名称：</label>
+						<div class="inp-box left">
+							<p class="left">
+								<input type="text" placeholder="" />
+							</p>
+						</div>
+					</div>
+					<div class="inp clearfix">
+						<label class="inp-name left">短信内容：</label>
+						<textarea name="" class="inp-textarea" rows="" cols=""></textarea>
+					</div>
+					<div class="inp-btn">
+						<div class="btn-center">
+							<span class="mybtn gray" onclick="confirmWin(1)">取消</span>
+							<span class="mybtn" onclick="confirmWin(2)">确认修改</span>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>	
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			$('.close').click(function(){
+				parent.hideWin();
+			});
+		});
+		//确认取消按钮
+		function confirmWin(n){
+			if(n == 1){
+				parent.parent.showWin(3);
+			}else if(n == 2){
+				parent.parent.showWin(3);
+			}
+		}
+		
+	</script>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<title>台风区人流监控预警辅助平台</title>
+		<!-- 引入 Bootstrap -->
+	    <link href="../../js/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	    <link id="link" href="../../css/qs.css" rel="stylesheet" />
+	    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+	    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+	    <!--[if lt IE 9]>
+	    <script src="../../js/html5/html5shiv.js"></script>
+	    <script src="../../js/html5/respond.min.js"></script>
+	    <![endif]-->
+	    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	    <script src="../../js/jquery.min.js"></script>
+	    <!-- 包括所有已编译的插件 -->
+	    <script src="../../js/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<header class="header container">
+			<div class="row">
+				<div class="logo ft1 left col-sm-4">
+					<span class="logo-img left"></span>
+					<i class="line left"></i>
+					<span class="logo-name left">台风区人流监控预警辅助平台</span>
+				</div>
+				<div class="nav-con left col-sm-6">
+					<ul class="nav clearfix ft3">
+	                    <li><a href="../index/index.html"><span>实时监控</span></a></li>
+	                    <li><a href="../emergency/emergency.html"><span>应急预警</span></a></li>
+	                    <li><a href="../history/history.html"><span>历史对比</span></a></li>
+	                    <li class="active"><a href="mainPage.html"><span>系统管理</span></a></li>
+	                </ul>
+				</div>
+				<div class="right-con right">
+					<span class="left">用户名</span>
+					<span class="left">|</span>
+					<span class="left">退出</span>
+				</div>
+			</div>
+		</header>
+		<div class="index-con detail-con">
+			<div class="left-nav left">
+				<p class="back-index clearfix">返回首页</p>
+				<ul class="column clearfix">
+					<li>
+						<a href="#" class="lia lia1 active">预警管理<i></i></a>
+						<div class="spread" style="display: block;">
+							<a class="active" href="#" onclick="changeSrc(1);">预警记录<i class="left"></i></a>
+							<a href="#" onclick="changeSrc(2);">新增预警<i></i></a>
+							<a href="#" onclick="changeSrc(3);">信息发布<i></i></a>
+							<a href="#" onclick="changeSrc(4);">信息记录<i></i></a>
+						</div>
+					</li>
+					<li>
+						<a href="#" class="lia lia2">防区管理<i class="down"></i></a>
+						<div class="spread">
+							<a href="#" onclick="changeSrc(5);">防区查询<i></i></a>
+							<a href="#" onclick="changeSrc(6);">新增防区<i></i></a>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="right-con right">
+				<iframe id="spot" src="warnReport.html" scrolling="no" frameborder="0" width="100%" height="100%"></iframe>
+			</div>
+		</div>
+		<!--弹窗-->
+		<div class="fullscreen">
+	  		<div class="full-con">
+	  			<iframe id="win" src="" scrolling="no" frameborder="0" width="100%" height="100%"></iframe>
+	  		</div>
+	  	</div>
+		<!--全屏地图-->
+		<div class="full-map">
+	  		<div class="full-con">
+	  			<iframe id="fullmap" src="" scrolling="no" frameborder="0" width="100%" height="100%"></iframe>
+	  		</div>
+	  	</div>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			var h = $(window).height() - $('header').height();
+			$('.index-con').height(h);
+			
+			$('.full-map .full-con').width($(window).width()).height($(window).height());
+			
+			//左侧边栏展开
+			$('.lia').click(function(){
+				$(this).removeClass('active');
+				if($(this).next().length > 0){
+					$(this).find('i').toggleClass('down');
+					$(this).parent().siblings().find('.lia i').addClass('down');
+					$(this).addClass('active');
+				}else{
+					$(this).addClass('active');
+				}
+				$(this).find('.lia').removeClass('active');
+				$(this).parent().siblings().find('a').removeClass('active');
+				$(this).parent().siblings().find('a i').removeClass('left');
+				$(this).parent().siblings().find('.lia i').removeClass('left');
+				$(this).parent().siblings().find('.spread').hide(300);
+				$(this).next().toggle(300);
+			});
+		    
+		    $('.spread a').click(function(){
+		    	$(this).addClass('active').siblings().removeClass('active');
+		    	$(this).find('i').addClass('left');
+		    	$(this).siblings().find('i').removeClass('left');
+//		    	$(this).parent().prev().removeClass('active');
+				$(this).parent().parent().siblings().find('a').removeClass('active');
+		    });
+			
+			//弹窗位置
+			var top = ($(window).height() - $('.fullscreen .full-con').outerHeight()) / 2;
+	        var left = ($(window).width() - $('.fullscreen .full-con').outerWidth()) / 2;
+	        $('.fullscreen .full-con').css({
+	            'left': left,
+	            'top': top,
+	        });
+		});	
+		
+		//显示弹窗
+		function showWin(n){
+			$('.fullscreen').show();
+			if(n == 1){
+				$('#win').attr('src','addWin.html');//新增预警
+			}else if(n == 2){
+				$('#win').attr('src','newWin.html');//新增模板
+			}else if(n == 3){
+				$('#win').attr('src','editWin.html');//修改或删除模板
+			}else if(n == 4){
+				$('#win').attr('src','sendWin.html');//提交发送
+			}else if(n == 5){
+				$('#win').attr('src','alterWin.html');//修改短信模板
+			}else if(n == 6){
+				$('#win').attr('src','deleteWin.html');//删除短信模板
+			}
+			
+		}
+		//显示全屏地图
+		function showFullmap(n){
+			$('.full-map').show();
+			if(n == 1){
+				$('#fullmap').attr('src','mapChoose.html');
+			}else if(n == 2){
+				$('#fullmap').attr('src','areaList.html');
+			}
+		}
+		//关闭弹窗
+		function hideWin(){
+			$('.fullscreen').hide();
+		}
+		//关闭全屏地图
+		function hideFullmap(){
+			$('.full-map').hide();
+		}
+		//切换页面
+		function changeSrc(n){
+			if(n == 1){
+				$('#spot').attr('src','warnReport.html');
+			}else if(n == 2){
+				$('#spot').attr('src','addReport.html');
+			}else if(n == 3){
+				$('#spot').attr('src','infoReport.html');
+			}else if(n == 4){
+				$('#spot').attr('src','recordReport.html');
+			}else if(n == 5){
+				$('#spot').attr('src','controlSearch.html');
+			}else if(n == 6){
+				$('#spot').attr('src','addControl.html');
+			}
+		}
+		function getWH(){
+			parm={};
+			parm.w = $('.detail-con .right-con').width();
+			parm.h = $('.detail-con .right-con').height();
+			return parm;
+		}
+	</script>
+</html>

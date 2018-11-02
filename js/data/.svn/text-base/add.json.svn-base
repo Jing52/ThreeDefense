@@ -1,0 +1,21 @@
+{
+	"total":1,
+	"rows":[
+		{
+			"WARN_AREA":"海口 龙华区",
+			"WARN_CONTROL":"万绿园",
+			"WARN_INDICATOR":"实时客流量",
+			"WARN_LEVEL":"<span class='view'>查看</span>",
+			"WARN_CREATE":"xxx",
+			"WARN_CREATETIME":"2017-10-09"
+		},
+		{
+			"WARN_AREA":"海口 龙华区",
+			"WARN_CONTROL":"万绿园",
+			"WARN_INDICATOR":"实时客流量",
+			"WARN_LEVEL":"<span class='view'>查看</span>",
+			"WARN_CREATE":"xxx",
+			"WARN_CREATETIME":"2017-10-09"
+		}
+	]
+}

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<title>台风区人流监控预警辅助平台</title>
+		<!-- 引入 Bootstrap -->
+	    <link href="../../js/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	    <link id="link" href="../../css/qs.css" rel="stylesheet" />
+	    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+	    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+	    <!--[if lt IE 9]>
+	    <script src="../../js/html5/html5shiv.js"></script>
+	    <script src="../../js/html5/respond.min.js"></script>
+	    <![endif]-->
+	    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	    <script src="../../js/jquery.min.js"></script>
+	    <!-- 包括所有已编译的插件 -->
+	    <script src="../../js/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+	    <!-- 引入 echarts.js -->
+    	<script src="../../js/echarts/echarts.min.js"></script>
+	</head>
+	<body>
+		<div class="win">
+			<div class="win-tit"><span class="close">×</span></div>
+			<div class="win-con">
+				<div class="win-nav next-nav">
+					<ul class="nav nav-tabs ft7" role="tablist">
+	                    <li role="presentation" class="active"><a href="#tab1" role="tab" data-toggle="tab" onfocus="this.blur();">来源总览</a></li>
+	                    <li role="presentation"><a href="#tab2" role="tab" data-toggle="tab" onfocus="this.blur();">国际</a></li>
+	                    <li role="presentation"><a href="#tab3" role="tab" data-toggle="tab" onfocus="this.blur();">国内</a></li>
+	                    <li role="presentation"><a href="#tab4" role="tab" data-toggle="tab" onfocus="this.blur();">省内</a></li>
+	                    <li role="presentation"><a href="#tab5" role="tab" data-toggle="tab" onfocus="this.blur();">本地</a></li>
+	                </ul>
+	                <div class="tab-content">
+					    <div role="tabpanel" class="tab-pane active" id="tab1">
+					    	<div id="chart" style="width: 100%;height: 100%;"></div>
+					    </div>
+					    <div role="tabpanel" class="tab-pane" id="tab2">
+					    	<div class="table-con">
+								<div class="list tit-list clearfix">
+									<span>排行</span>
+									<span>地区</span>
+									<span>客流量</span>
+								</div>
+								<div class="list clearfix">
+									<span>1</span>
+									<span>万城镇</span>
+									<span>3143330</span>
+								</div>
+								<div class="list clearfix">
+									<span>2</span>
+									<span>后安镇</span>
+									<span>3143330</span>
+								</div>
+								<div class="list clearfix">
+									<span>3</span>
+									<span>后安镇</span>
+									<span>3143330</span>
+								</div>
+								<div class="list clearfix">
+									<span>4</span>
+									<span>后安镇</span>
+									<span>3143330</span>
+								</div>
+								<div class="list clearfix">
+									<span>5</span>
+									<span>后安镇</span>
+									<span>3143330</span>
+								</div>
+							</div>
+							<nav aria-label="Page navigation">
+							    <ul class="pagination right">
+							    	<li>
+							      		<a href="#" aria-label="Previous">
+							       		<span aria-hidden="true">&laquo;</span>
+							      		</a>
+							    	</li>
+								    <li><a href="#">1</a></li>
+								    <li><a href="#">2</a></li>
+								    <li><a href="#">3</a></li>
+								    <li><a href="#">4</a></li>
+								    <li><a href="#">5</a></li>
+							    	<li>
+								     	<a href="#" aria-label="Next">
+								        	<span aria-hidden="true">&raquo;</span>
+								      	</a>
+								    </li>
+							  	</ul>
+							</nav>
+					    </div>
+					    <div role="tabpanel" class="tab-pane" id="tab3">
+					    	<div class="table-con">
+								<div class="list tit-list clearfix">
+									<span>排行</span>
+									<span>地区</span>
+									<span>客流量</span>
+								</div>
+								<div class="list clearfix">
+									<span>1</span>
+									<span>万城镇</span>
+									<span>3143330</span>
+								</div>
+								<div class="list clearfix">
+									<span>2</span>
+									<span>后安镇</span>
+									<span>3143330</span>
+								</div>
+								<div class="list clearfix">
+									<span>3</span>
+									<span>后安镇</span>
+									<span>3143330</span>
+								</div>
+								<div class="list clearfix">
+									<span>4</span>
+									<span>后安镇</span>
+									<span>3143330</span>
+								</div>
+								<div class="list clearfix">
+									<span>5</span>
+									<span>后安镇</span>
+									<span>3143330</span>
+								</div>
+							</div>
+							<nav aria-label="Page navigation">
+							    <ul class="pagination right">
+							    	<li>
+							      		<a href="#" aria-label="Previous">
+							       		<span aria-hidden="true">&laquo;</span>
+							      		</a>
+							    	</li>
+								    <li><a href="#">1</a></li>
+								    <li><a href="#">2</a></li>
+								    <li><a href="#">3</a></li>
+								    <li><a href="#">4</a></li>
+								    <li><a href="#">5</a></li>
+							    	<li>
+								     	<a href="#" aria-label="Next">
+								        	<span aria-hidden="true">&raquo;</span>
+								      	</a>
+								    </li>
+							  	</ul>
+							</nav>
+					    </div>
+					    <div role="tabpanel" class="tab-pane" id="tab4">
+					    	<div class="table-con">
+								<div class="list tit-list clearfix">
+									<span>排行</span>
+									<span>地区</span>
+									<span>客流量</span>
+								</div>
+								<div class="list clearfix">
+									<span>1</span>
+									<span>万城镇</span>
+									<span>3143330</span>
+								</div>
+								<div class="list clearfix">
+									<span>2</span>
+									<span>后安镇</span>
+									<span>3143330</span>
+								</div>
+								<div class="list clearfix">
+									<span>3</span>
+									<span>后安镇</span>
+									<span>3143330</span>
+								</div>
+								<div class="list clearfix">
+									<span>4</span>
+									<span>后安镇</span>
+									<span>3143330</span>
+								</div>
+								<div class="list clearfix">
+									<span>5</span>
+									<span>后安镇</span>
+									<span>3143330</span>
+								</div>
+							</div>
+							<nav aria-label="Page navigation">
+							    <ul class="pagination right">
+							    	<li>
+							      		<a href="#" aria-label="Previous">
+							       		<span aria-hidden="true">&laquo;</span>
+							      		</a>
+							    	</li>
+								    <li><a href="#">1</a></li>
+								    <li><a href="#">2</a></li>
+								    <li><a href="#">3</a></li>
+								    <li><a href="#">4</a></li>
+								    <li><a href="#">5</a></li>
+							    	<li>
+								     	<a href="#" aria-label="Next">
+								        	<span aria-hidden="true">&raquo;</span>
+								      	</a>
+								    </li>
+							  	</ul>
+							</nav>
+					    </div>
+					    <div role="tabpanel" class="tab-pane" id="tab5">
+					    	<div class="table-con">
+								<div class="list tit-list clearfix">
+									<span>排行</span>
+									<span>地区</span>
+									<span>客流量</span>
+								</div>
+								<div class="list clearfix">
+									<span>1</span>
+									<span>万城镇</span>
+									<span>3143330</span>
+								</div>
+								<div class="list clearfix">
+									<span>2</span>
+									<span>后安镇</span>
+									<span>3143330</span>
+								</div>
+								<div class="list clearfix">
+									<span>3</span>
+									<span>后安镇</span>
+									<span>3143330</span>
+								</div>
+								<div class="list clearfix">
+									<span>4</span>
+									<span>后安镇</span>
+									<span>3143330</span>
+								</div>
+								<div class="list clearfix">
+									<span>5</span>
+									<span>后安镇</span>
+									<span>3143330</span>
+								</div>
+							</div>
+							<nav aria-label="Page navigation">
+							    <ul class="pagination right">
+							    	<li>
+							      		<a href="#" aria-label="Previous">
+							       		<span aria-hidden="true">&laquo;</span>
+							      		</a>
+							    	</li>
+								    <li><a href="#">1</a></li>
+								    <li><a href="#">2</a></li>
+								    <li><a href="#">3</a></li>
+								    <li><a href="#">4</a></li>
+								    <li><a href="#">5</a></li>
+							    	<li>
+								     	<a href="#" aria-label="Next">
+								        	<span aria-hidden="true">&raquo;</span>
+								      	</a>
+								    </li>
+							  	</ul>
+							</nav>
+					    </div>
+					</div>		
+				</div>
+			</div>
+		</div>	
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			$('.close').click(function(){
+				parent.hideWin();
+			});
+			loadChart();
+		});
+		function loadChart(){
+			//来源总览
+			var myFlow = echarts.init(document.getElementById('chart'));
+			var option = {
+			    tooltip: {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b}: {c}% "
+			    },
+			    legend:{
+			    	show:true,
+			    	orient:'vertical',
+			    	left:'80%',
+			    	top:'10%',
+			    	itemWidth :14,
+			    	itemHeight :14,
+			    	data:['国际','国内','省内','本地'],
+			    	textStyle:{
+			    		color:'#333',
+			    		fontSize:'14',
+			    	}
+			    },
+			    series: [
+			        {
+			            name:'来源',
+			            type:'pie',
+			            radius: ['0', '65%'],
+			            center: ['40%', '50%'],
+			            data:[
+			            	{value:16, name:'国际'},
+			                {value:35, name:'国内'},
+			                {value:29, name:'省内'},
+			                {value:20, name:'本地'},
+			            ],
+			            color:['#d25000','#ffa912','#258d8c','#0559a6'],
+			            itemStyle: {
+			            	normal:{
+			            		label: {
+							        show: true,
+							        color: '#fdfdfd',
+                    			    formatter: '{c}%',
+                    			    textStyle :{
+                    			   		fontSize:'18',
+                    			   		fontWeight:'bold'
+                    			   	}
+							    },
+			            		labelLine: {
+							       show: false,
+							       length:3
+							    }
+			            	},
+			                emphasis: {
+			                    shadowBlur: 10,
+			                    shadowOffsetX: 0,
+			                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+			                }
+			            }
+			        }
+			    ]
+			}
+			myFlow.setOption(option);
+		}
+	</script>
+</html>

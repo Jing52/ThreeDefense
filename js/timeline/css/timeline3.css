@@ -1,0 +1,67 @@
+body{ background: none;}
+.timeline{position: absolute;top: 5px;left:15px;width: 100%;height: 55px; left: 0px;}
+.progress{position:relative;top:10px; left: 1%; z-index:7;margin: 0 auto; width: 88%; border-radius:10px;height: 17px; border: 1px solid #fff;}
+ul{list-style: none;}
+
+.progress-bar{z-index:8;width: 100%;height: 100%; transition: none; -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.25), inset 0 1px rgba(255, 255, 255, 0.1); box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.25), inset 0 1px rgba(255, 255, 255, 0.1); border-radius:15px; background: #0c919f; border: none !important;}
+
+.progress-bar:before, .progress-bar:after { content: ''; position: absolute; top: 0; left: 0; right: 0;}
+.progress-bar:before { bottom: 0; border-radius: 4px 4px 4px 4px;}
+
+/*
+.marker-container{z-index:10;width: 90%;height:24px;position: absolute;top:7px;left:5%;margin-left:-12px;}
+.marker{width:24px;height:24px;background: url(../images/1.png) right no-repeat;cursor: move;margin-left:100%;}
+*/
+.marker{z-index:10;width:24px;height:24px;background: url(../images/1.png) right no-repeat;cursor: move;position: absolute;top:6px; left: 88px;}
+
+.timeline-scale-container{z-index: 9;position: absolute;top:0px;width: 100%;}
+
+.timeline-scale {
+    padding: 0;
+    list-style: none;
+    background-repeat: repeat-x;
+    margin: 0 auto; 
+    width: 98%;
+    margin-left: -30px!important;
+}
+
+.timeline-scale li {
+    font-family:Arial, "Microsoft YaHei", 微软雅黑, "WenQuanYi Micro Hei", 文泉驿微米黑, STXihei, 华文细黑, sans-serif;
+    display: inline-block;
+    width: 4.147% !important;
+    margin: 0;
+    padding: 1.3rem 0 0 0;
+    list-style: none;
+    cursor: pointer;
+    text-align: right;
+    color: #fff;
+    font-size:13px;
+    *display: inline;
+    *zoom: 1
+}
+@media only screen and (min-width: 1920px) {
+	.timeline-scale li {padding: 1rem 0 0 0;}
+}
+.time-player {
+    z-index: 12;
+    position: absolute;
+    top: 5px;
+    left: 3%;
+}
+.time-player span{
+    display: inline-block;
+    width: 33px;
+    height: 33px;
+    cursor: pointer;
+    background: url(../images/play.png)  no-repeat;
+    background-size: 100%;
+
+}
+.time-player-play{
+    background: url(../images/stop.png)  no-repeat !important;
+    background-size: 100% !important;
+}
+.time-player-stop{
+    background: url(../images/stop.png)  no-repeat !important;
+    background-size: 100% !important;
+}

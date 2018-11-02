@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<title>台风区人流监控预警辅助平台</title>
+		<!-- 引入 Bootstrap -->
+	    <link href="../../js/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	    <link id="link" href="../../css/qs.css" rel="stylesheet" />
+	    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+	    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+	    <!--[if lt IE 9]>
+	    <script src="../../js/html5/html5shiv.js"></script>
+	    <script src="../../js/html5/respond.min.js"></script>
+	    <![endif]-->
+	    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	    <script src="../../js/jquery.min.js"></script>
+	    <!-- 包括所有已编译的插件 -->
+	    <script src="../../js/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+		<!-- 引入 echarts.js -->
+    	<script src="../../js/echarts/echarts.min.js"></script>
+	</head>
+	<body>
+		<div class="win">
+			<div class="win-tit">新增预警<span class="close">×</span></div>
+			<div class="win-con add-win">
+				<div class="term-con">
+					<div class="inp clearfix">
+						<label class="inp-name left">归属市县：</label>
+						<div class="inp-box left">
+							<span class="open">海口<i class="down"></i></span>
+							<div class="slide-con">
+								<p>海口</p>
+								<p>海口2</p>
+							</div>
+						</div>
+						<div class="inp-box inp-area left">
+							<span class="open">美兰区<i class="down"></i></span>
+							<div class="slide-con">
+								<p>美兰区</p>
+								<p>美兰区2</p>
+							</div>
+						</div>
+					</div>
+					<div class="inp clearfix">
+						<label class="inp-name left">区域类型：</label>
+						<div class="inp-box add-box left">
+							<span class="open"><i class="down"></i></span>
+							<div class="slide-con">
+								<p>区域类型1</p>
+								<p>区域类型2</p>
+							</div>
+						</div>
+					</div>
+					<div class="inp clearfix">
+						<label class="inp-name left">防控区名称：</label>
+						<div class="inp-box add-box left">
+							<span class="open"><i class="down"></i></span>
+							<div class="slide-con">
+								<p>防控区名称1</p>
+								<p>防控区名称2</p>
+							</div>
+						</div>
+					</div>
+					<div class="inp clearfix">
+						<label class="inp-name left">预警指标：</label>
+						<div class="inp-box add-box left">
+							<span class="open">实时客流量<i class="down"></i></span>
+							<div class="slide-con">
+								<p>实时客流量</p>
+								<p>实时客流量2</p>
+							</div>
+						</div>
+					</div>
+					<div class="inp warn-level clearfix">
+						<label class="inp-name left">预警级别：</label>
+						<label class="inp-bz left">(由小到大)</label>
+						<div class="level-box left">
+							<div class="inp-box left">
+								<p class="left">
+									<input type="text" placeholder="" />
+								</p>
+								<i class="inp-level left">Ⅰ级</i>
+								<p class="left">
+									<input type="text" placeholder="" />
+								</p>
+								<span class="mybtn addbtn">+增加</span>
+							</div>
+							
+							
+						</div>
+					</div>
+					<p class="beizhu">提示：最大值请输入：∞</p>
+					<div class="inp-btn">
+						<div class="btn-center">
+							<span class="mybtn">确定</span>
+							<span class="mybtn gray">返回</span>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>	
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			$('.close').click(function(){
+				parent.hideWin();
+			});
+			
+			//下拉选择
+			$('.open').click(function(){
+				$(this).parent().parent().siblings().find('.slide-con').slideUp(300);
+				$(this).next('.slide-con').slideToggle(300);
+				$(this).toggleClass('active');
+				$('.slide-con p').removeClass('active');
+			});
+			$('.slide-con p').click(function(){
+				var txt = $(this).text() + '<i class="down"></i>';
+				$(this).parent().prev('.open').html(txt); 
+				$('.open').removeClass('active');
+				$('.slide-con').slideUp(300);
+			});
+			
+			$('.slide-con p').hover(function(){
+				$(this).addClass('active').siblings().removeClass('active');
+			});
+			
+			//增加删除预警
+			$('body').on('click' , '.addbtn' ,function(){
+				$('.level-box').append('<div class="inp-box left">'
+								+'<p class="left">'
+									+'<input type="text" placeholder="" />'
+								+'</p>'
+								+'<i class="inp-level left">Ⅱ级</i>'
+								+'<p class="left">'
+									+'<input type="text" placeholder="" />'
+								+'</p>'
+								+'<span class="mybtn addbtn">+增加</span>'
+								+'<span class="mybtn delbtn">-删除</span>'
+							+'</div>');
+			});
+			$('body').on('click' , '.delbtn' ,function(){
+				$(this).parent().remove();
+			});
+			
+		});
+		
+	</script>
+</html>

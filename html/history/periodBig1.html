@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<title>台风区人流监控预警辅助平台</title>
+		<!-- 引入 Bootstrap -->
+	    <link href="../../js/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	    <link id="link" href="../../css/qs.css" rel="stylesheet" />
+	    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+	    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+	    <!--[if lt IE 9]>
+	    <script src="../../js/html5/html5shiv.js"></script>
+	    <script src="../../js/html5/respond.min.js"></script>
+	    <![endif]-->
+	    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	    <script src="../../js/jquery.min.js"></script>
+	    <!-- 包括所有已编译的插件 -->
+	    <script src="../../js/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+	    <!--时间轴-->
+		<!--<script type="text/javascript" src="../../js/timeline/js/Date.Format.js"></script>-->
+	    <!--<script type="text/javascript" src="../../js/timeline/js/timeline_control.js"></script>-->
+	    <!--<link href="../../js/timeline/css/timeline_consen.css" rel="stylesheet" type="text/css">-->
+	    <!-- 引入 echarts.js -->
+    	<script src="../../js/echarts/echarts.min.js"></script>
+    	<!--引入百度地图秘钥-->
+    	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=5MBMGE0wCEs9fddZOiBFGZp8"></script>
+    	<script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+	</head>
+	<body>
+		<div class="big-map">
+			<div id="map" style="width: 100%;height: 100%;"></div>
+			<div class="big-close"></div>
+			<div class="wind-tit">夏季台风</div>
+			<!--台风季时间轴-->
+			<div class="map-time-box">
+				<span class="play"></span>
+    			<p class="dot clearfix">
+    				<span><i onclick="checkSrc(1)"></i></span>
+    				<span><i onclick="checkSrc(2)"></i></span>
+    				<span><i onclick="checkSrc(3)"></i></span>
+    				<span><i onclick="checkSrc(4)"></i></span>
+    			</p>
+    			<p class="text clearfix">
+    				<span>1号台风-6月6日登陆</span>
+    				<span>1号台风-7月6日登陆</span>
+    				<span>1号台风-8月6日登陆</span>
+    				<span>1号台风-8月30日登陆</span>
+    			</p>
+    		</div>
+			<!--局部地图-->
+			<div class="map-litter"></div>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			var parm = parent.getBWH();
+			$('#map').width(parm.w).height(parm.h);
+			
+			$('.big-close').click(function(){
+				parent.$('.fullmap').hide();
+			});
+			
+		    //加载百度地图
+		    loadMap1();
+		});
+		function loadMap1(){
+			var map = new BMap.Map("map");
+		    var heatmapOverlay;
+		    var map_zoom_level = 10;
+			var hot_radius = 80;
+			var point = new BMap.Point(109.844642,19.252138);
+			map.centerAndZoom(point, 9);             // 初始化地图，设置中心点坐标和地图级别
+		    map.enableScrollWheelZoom(); // 允许滚轮缩放
+		    map.setMapStyle({style:'midnight'}); //设置主题样式
+		    
+			
+			map.addEventListener("zoomend", function () {
+		        setHotRadius(map, heatmapOverlay, map_zoom_level, hot_radius);
+		    });
+		    //根据层级动态调整热力图的半径
+			function setHotRadius(map, heatmapOverlay, map_zoom_level, hot_radius) {
+			    if (heatmapOverlay != null && heatmapOverlay != undefined) {
+			        var zoomDiff = map.getZoom() - map_zoom_level;
+			        if (zoomDiff > 0) {
+			            heatmapOverlay.setOptions({"radius": hot_radius * Math.pow(1.2, zoomDiff), "opacity": 0});
+			            //setGradient();
+			        } else if (zoomDiff < 0) {
+			            heatmapOverlay.setOptions({"radius": hot_radius * Math.pow(0.8, Math.abs(zoomDiff)), "opacity": 0});
+			            //setGradient();
+			        } else {
+			            heatmapOverlay.setOptions({"radius": hot_radius, "opacity": 0});
+			            //setGradient();
+			        }
+			    }
+			}
+			
+			function Convert_mapinfo_To_bd2(lng, lat) {
+			    var point = Convert_mapinfo_To_google(lng, lat);
+			    return Convert_GCJ02_To_BD09(point.lon, point.lat);
+			}
+		   
+		    if(!isSupportCanvas()){
+		    	alert('热力图目前只支持有canvas支持的浏览器,您所使用的浏览器不能使用热力图功能~')
+		    }
+		    var points = [];
+			heatmapOverlay = new BMapLib.HeatmapOverlay({"radius":80,"opacity":0});
+			map.addOverlay(heatmapOverlay);
+			heatmapOverlay.setDataSet({data:points,max:400});
+			heatmapOverlay.show();
+			setGradient();
+			
+		    function setGradient(){
+		     	var gradient = {
+		            .9: 'rgb(255,0,0)',
+		            .8: 'rgb(255,57,0)',
+		            .7: 'rgb(255,112,0)',
+		            .6: 'rgb(255,173,0)',
+		            .5: 'rgb(255,237,0)',
+					.4: 'rgb(209,232,0)',
+					.3: 'rgb(134,195,0)',
+					.2: 'rgb(60,158,0)',
+					.1: 'rgb(107,27,86)'
+		       };
+		        heatmapOverlay.setOptions({"gradient":gradient});
+		    }
+			//判断浏览区是否支持canvas
+		    function isSupportCanvas(){
+		        var elem = document.createElement('canvas');
+		        return !!(elem.getContext && elem.getContext('2d'));
+		    }
+		}
+		function loadMap2(){
+			var map = new BMap.Map("map");
+		    var heatmapOverlay;
+		    var map_zoom_level = 10;
+			var hot_radius = 80;
+			var point = new BMap.Point(109.844642,19.252138);
+			map.centerAndZoom(point, 9);             // 初始化地图，设置中心点坐标和地图级别
+		    map.enableScrollWheelZoom(); // 允许滚轮缩放
+		    map.setMapStyle({style:'midnight'}); //设置主题样式
+		    
+			
+			map.addEventListener("zoomend", function () {
+		        setHotRadius(map, heatmapOverlay, map_zoom_level, hot_radius);
+		    });
+		    //根据层级动态调整热力图的半径
+			function setHotRadius(map, heatmapOverlay, map_zoom_level, hot_radius) {
+			    if (heatmapOverlay != null && heatmapOverlay != undefined) {
+			        var zoomDiff = map.getZoom() - map_zoom_level;
+			        if (zoomDiff > 0) {
+			            heatmapOverlay.setOptions({"radius": hot_radius * Math.pow(1.2, zoomDiff), "opacity": 0});
+			            //setGradient();
+			        } else if (zoomDiff < 0) {
+			            heatmapOverlay.setOptions({"radius": hot_radius * Math.pow(0.8, Math.abs(zoomDiff)), "opacity": 0});
+			            //setGradient();
+			        } else {
+			            heatmapOverlay.setOptions({"radius": hot_radius, "opacity": 0});
+			            //setGradient();
+			        }
+			    }
+			}
+			
+			function Convert_mapinfo_To_bd2(lng, lat) {
+			    var point = Convert_mapinfo_To_google(lng, lat);
+			    return Convert_GCJ02_To_BD09(point.lon, point.lat);
+			}
+		   
+		    if(!isSupportCanvas()){
+		    	alert('热力图目前只支持有canvas支持的浏览器,您所使用的浏览器不能使用热力图功能~')
+		    }
+		    var points = [];
+			heatmapOverlay = new BMapLib.HeatmapOverlay({"radius":80,"opacity":0});
+			map.addOverlay(heatmapOverlay);
+			heatmapOverlay.setDataSet({data:points,max:400});
+			heatmapOverlay.show();
+			setGradient();
+			
+		    function setGradient(){
+		     	var gradient = {
+		            .9: 'rgb(255,0,0)',
+		            .8: 'rgb(255,57,0)',
+		            .7: 'rgb(255,112,0)',
+		            .6: 'rgb(255,173,0)',
+		            .5: 'rgb(255,237,0)',
+					.4: 'rgb(209,232,0)',
+					.3: 'rgb(134,195,0)',
+					.2: 'rgb(60,158,0)',
+					.1: 'rgb(107,27,86)'
+		       };
+		        heatmapOverlay.setOptions({"gradient":gradient});
+		    }
+			//判断浏览区是否支持canvas
+		    function isSupportCanvas(){
+		        var elem = document.createElement('canvas');
+		        return !!(elem.getContext && elem.getContext('2d'));
+		    }
+		}
+		function loadMap3(){
+			var map = new BMap.Map("map");
+		    var heatmapOverlay;
+		    var map_zoom_level = 10;
+			var hot_radius = 80;
+			var point = new BMap.Point(109.844642,19.252138);
+			map.centerAndZoom(point, 9);             // 初始化地图，设置中心点坐标和地图级别
+		    map.enableScrollWheelZoom(); // 允许滚轮缩放
+		    map.setMapStyle({style:'midnight'}); //设置主题样式
+		    
+			
+			map.addEventListener("zoomend", function () {
+		        setHotRadius(map, heatmapOverlay, map_zoom_level, hot_radius);
+		    });
+		    //根据层级动态调整热力图的半径
+			function setHotRadius(map, heatmapOverlay, map_zoom_level, hot_radius) {
+			    if (heatmapOverlay != null && heatmapOverlay != undefined) {
+			        var zoomDiff = map.getZoom() - map_zoom_level;
+			        if (zoomDiff > 0) {
+			            heatmapOverlay.setOptions({"radius": hot_radius * Math.pow(1.2, zoomDiff), "opacity": 0});
+			            //setGradient();
+			        } else if (zoomDiff < 0) {
+			            heatmapOverlay.setOptions({"radius": hot_radius * Math.pow(0.8, Math.abs(zoomDiff)), "opacity": 0});
+			            //setGradient();
+			        } else {
+			            heatmapOverlay.setOptions({"radius": hot_radius, "opacity": 0});
+			            //setGradient();
+			        }
+			    }
+			}
+			
+			function Convert_mapinfo_To_bd2(lng, lat) {
+			    var point = Convert_mapinfo_To_google(lng, lat);
+			    return Convert_GCJ02_To_BD09(point.lon, point.lat);
+			}
+		   
+		    if(!isSupportCanvas()){
+		    	alert('热力图目前只支持有canvas支持的浏览器,您所使用的浏览器不能使用热力图功能~')
+		    }
+		    var points = [];
+			heatmapOverlay = new BMapLib.HeatmapOverlay({"radius":80,"opacity":0});
+			map.addOverlay(heatmapOverlay);
+			heatmapOverlay.setDataSet({data:points,max:400});
+			heatmapOverlay.show();
+			setGradient();
+			
+		    function setGradient(){
+		     	var gradient = {
+		            .9: 'rgb(255,0,0)',
+		            .8: 'rgb(255,57,0)',
+		            .7: 'rgb(255,112,0)',
+		            .6: 'rgb(255,173,0)',
+		            .5: 'rgb(255,237,0)',
+					.4: 'rgb(209,232,0)',
+					.3: 'rgb(134,195,0)',
+					.2: 'rgb(60,158,0)',
+					.1: 'rgb(107,27,86)'
+		       };
+		        heatmapOverlay.setOptions({"gradient":gradient});
+		    }
+			//判断浏览区是否支持canvas
+		    function isSupportCanvas(){
+		        var elem = document.createElement('canvas');
+		        return !!(elem.getContext && elem.getContext('2d'));
+		    }
+		}
+		
+		//时间轴点击查看对应台风
+	    function checkSrc(n){
+	    	if(n == 1){
+				loadMap1();
+	    	}else if(n == 2){
+	    		loadMap2();
+	    	}else if(n == 3){
+	    		loadMap3();
+	    	}
+	    }
+	</script>
+</html>

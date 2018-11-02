@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<title>台风区人流监控预警辅助平台</title>
+		<!-- 引入 Bootstrap -->
+	    <link href="../../js/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	    <link id="link" href="../../css/qs.css" rel="stylesheet" />
+	    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+	    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+	    <!--[if lt IE 9]>
+	    <script src="../../js/html5/html5shiv.js"></script>
+	    <script src="../../js/html5/respond.min.js"></script>
+	    <![endif]-->
+	    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	    <script src="../../js/jquery.min.js"></script>
+	    <!-- 包括所有已编译的插件 -->
+	    <script src="../../js/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+		<!-- 引入 echarts.js -->
+    	<script src="../../js/echarts/echarts.min.js"></script>
+	</head>
+	<body>
+		<div class="win">
+			<div class="win-tit">全省各市县人口分布排行<span class="close">×</span></div>
+			<div class="win-con">
+				<div id="chart1" style="width: 100%;"></div>
+			</div>
+		</div>	
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			$('.close').click(function(){
+				parent.hideWin();
+			});
+			var chh=$('.win').height()-$('.win-tit').height();
+			$('#chart1').height(chh);
+			//加载地图
+			loadChart();
+		});
+		function loadChart(){
+			//台风季
+			var myFlow1 = echarts.init(document.getElementById('chart1'));
+			var option1 = {
+				grid: {
+			        left: '8%',
+			        right: '2%',
+			        bottom: '18%',
+			        top:'10%',
+			        containLabel: false
+			    },
+			    legend:{
+			    	show:true,
+			    	orient:'horizontal',
+			    	left:'center',
+			    	bottom:'0%',
+			    	data:['台风前','台风中','台风后'],
+			    	textStyle:{
+			    		color:'#1f1f1f'
+			    	}
+			    },
+			    tooltip: {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b}: {c}"
+			    },
+	            xAxis: [
+	            {
+			        type : 'category',
+	                data: ["0:00","1:00","2:00","3:00","4:00","5:00","6:00","7:00","8:00","9:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00","00:00",],
+			        axisLine:{
+			  			show: true,
+		                lineStyle:{
+		                    color: '#666',
+		                }                         
+		            },
+		            axisTick:{
+		            	show:false
+		            },
+		            axisLabel:{
+	                 //X轴刻度配置
+		                interval:1, //0：表示全部显示不间隔；auto:表示自动根据刻度个数和宽度自动设置间隔个数
+		                rotate:30,
+		                textStyle: {
+		                	color:'#666',
+		                	fontSize:12
+		                },
+		            },
+	            }],
+	            yAxis: [{
+			        type : 'value',
+	            	show:true,
+	            	axisLine:{
+			  			show: false,
+		                lineStyle:{
+		                    color: '#666',
+		                }                         
+		            },
+		            axisTick:{
+		            	show:false
+		            },
+	            	axisLabel: {
+	            		show:true,
+			            textStyle: {
+			                color: '#666'
+			            }
+			        }
+	            }],
+	            series: [
+	            {
+	                name: '台风前',
+	                type: 'line',
+	                barWidth: 30,
+	                data: [1520,2531,3354,2218,4483,2587,1520,2531,3354,2218,4483,2587,1520,2531,3354,2218,4483,2587,1520,2531,3354,2218,4483,2587],
+					itemStyle:{
+				        normal:{
+				            color:'#ffa912'
+				        }
+				    },
+	            },
+	            {
+	                name: '台风中',
+	                type: 'line',
+	                barWidth: 30,
+	                data: [1920,2131,2954,2818,3403,3507,3500,2931,3154,2918,3683,3087,2520,2931,3154,3218,4083,2887,1920,2501,3054,2918,3983,2987],
+					itemStyle:{
+				        normal:{
+				            color:'#ff1212'
+				        }
+				    },
+	            },
+	            {
+	                name: '台风后',
+	                type: 'line',
+	                barWidth: 30,
+	                data: [2520,1531,3454,2818,4183,2987,3520,3531,3354,2218,4483,2987,2120,2531,3154,2918,4183,2187,1920,2431,2354,3218,2483,2487],
+					itemStyle:{
+				        normal:{
+				            color:'#1287ff'
+				        }
+				    },
+	            }
+	            ]
+		    };
+			myFlow1.setOption(option1);
+		}
+	</script>
+</html>

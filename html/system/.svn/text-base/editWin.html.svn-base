@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<title>台风区人流监控预警辅助平台</title>
+		<!-- 引入 Bootstrap -->
+	    <link href="../../js/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	    <link id="link" href="../../css/qs.css" rel="stylesheet" />
+	    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+	    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+	    <!--[if lt IE 9]>
+	    <script src="../../js/html5/html5shiv.js"></script>
+	    <script src="../../js/html5/respond.min.js"></script>
+	    <![endif]-->
+	    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	    <script src="../../js/jquery.min.js"></script>
+	    <!-- 包括所有已编译的插件 -->
+	    <script src="../../js/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    	<link rel="stylesheet" type="text/css" href="../../js/easyui/themes/default/easyui.css">
+    	<link rel="stylesheet" type="text/css" href="../../js/easyui/themes/icon.css">
+    	<script type='text/javascript' src="../../js/easyui/jquery.easyui.min.js" charset="utf-8"></script>
+		<script type='text/javascript' src="../../js/easyui/locale/easyui-lang-zh_CN.js"></script>
+	</head>
+	<body>
+		<div class="win info-win">
+			<div class="win-tit">短信模板列表<span class="close">×</span></div>
+			<div class="win-con" style="height: 320px;">
+				<table id="tableCon"></table>
+			</div>
+		</div>	
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			$('.close').click(function(){
+				parent.hideWin();
+			});
+			//表格数据
+			$('#tableCon').datagrid({
+				url : '../../js/data/edit.json',
+	    		method: 'get',
+		        fit: true,
+		        fitColumns: true,
+		        singleSelect: true,
+		        nowrap: true,//数据长度超出列宽时将会自动截取。
+		        rownumbers: false,//行号
+		        pagination: true,
+		        pageNumber: 1,
+		        pageList: [10, 20, 30, 50],
+		        pageSize: 10,
+			    columns: [[
+		            {title: '模板名称', field: 'EDIT_NAME', width: 80, hidden: false, align: 'center'},
+	                {title: '短信内容', field: 'EDIT_CON', width: 200, hidden: false, align: 'center'},
+	                {title: '创建时间', field: 'EDIT_TIME', width: 120, hidden: false, align: 'center'},
+	                {title: '创建人', field: 'EDIT_CREATER', width: 80, hidden: false, align: 'center'},
+	                {title: '操作', field: 'EDIT_OPERATE', width: 100, hidden: false, align: 'center'},
+		        ]],
+			});
+			
+		});
+		//加载弹窗页面
+		function winWin(n){
+			if(n == 1){
+				parent.parent.showWin(5);
+			}else if(n == 2){
+				parent.parent.showWin(6);
+			}
+		}
+		
+	</script>
+</html>

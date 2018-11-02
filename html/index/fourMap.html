@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<title>台风区人流监控预警辅助平台</title>
+		<!-- 引入 Bootstrap -->
+	    <link href="../../js/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	    <link id="link" href="../../css/qs.css" rel="stylesheet" />
+	    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+	    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+	    <!--[if lt IE 9]>
+	    <script src="../../js/html5/html5shiv.js"></script>
+	    <script src="../../js/html5/respond.min.js"></script>
+	    <![endif]-->
+	    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+	    <script src="../../js/jquery.min.js"></script>
+	    <!-- 包括所有已编译的插件 -->
+	    <script src="../../js/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    	<!--引入百度地图秘钥-->
+    	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=5MBMGE0wCEs9fddZOiBFGZp8"></script>
+    	<script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+		<style>
+			#map label{max-width:none;}
+			#map label span{color:#ffa912;font-size: 15px;margin-right: 3px;}
+		</style>
+	</head>
+	<body>
+		<div class="four-map clearfix">
+    		<div class="map-con bot top left" onclick="loadMapIframe();">
+    			<div class="maps" id="map1">
+    				<img style="width: 100%;height: 100%;" src="../../images/map.png" alt="" />
+    			</div>
+    			<div class="info">前24小时</div>
+    		</div>
+    		<div class="map-con bot top right" onclick="loadMapIframe();">
+    			<div class="maps" id="map2">
+    				<img style="width: 100%;height: 100%;" src="../../images/map.png" alt="" />
+    			</div>
+    			<div class="info">前16小时</div>
+    		</div>
+    		<div class="map-con left" onclick="loadMapIframe();">
+    			<div class="maps" id="map3">
+    				<img style="width: 100%;height: 100%;" src="../../images/map.png" alt="" />
+    			</div>
+    			<div class="info">前8小时</div>
+    		</div>
+    		<div class="map-con right" onclick="loadMapIframe();">
+    			<div class="maps" id="map4">
+    				<img style="width: 100%;height: 100%;" src="../../images/map.png" alt="" />
+    			</div>
+    			<div class="info">当前</div>
+    		</div>
+    	</div>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			var parm = parent.nextWH();
+			$('.four-map').width(parm.w).height(parm.h);	
+			
+			//加载地图
+//			loadMap();
+		});	
+		
+		//加载地图全屏
+		function loadMapIframe(){
+			parent.mapIframe(1);
+		}
+		
+		function loadMap(){
+			var map = new BMap.Map("map");
+		    var heatmapOverlay;
+		    var map_zoom_level = 10;
+			var hot_radius = 80;
+			var point = new BMap.Point(109.844642,19.252138);
+			map.centerAndZoom(point, 10);   
+		    map.enableScrollWheelZoom();
+		    map.setMapStyle({style:'midnight'}); //设置主题样式
+		    
+		    var marker = new BMap.Marker(point);  // 创建标注
+			map.addOverlay(marker);               // 将标注添加到地图中
+		    var opts = {
+			    position : point,    // 指定文本标注所在的地理位置
+			    offset   : new BMap.Size(30, -30)    //设置文本偏移量
+			}
+			var label = new BMap.Label("万宁实时人流：" + '<br />' + "<span>704453</span>" + "人",{offset:new BMap.Size(-30,-60)},opts);
+			label.setStyle({
+				color : "#fff",
+				fontSize : "12px",
+				lineHeight : "25px",
+				fontFamily:"微软雅黑",
+				borderColor:"#93a9b9",
+				borderStyle:"solid",
+				borderRadius:"5px",
+				padding:"0 15px",
+				background:'rgba(0,119,255,.5)'
+			 });
+			marker.setLabel(label);
+			
+			map.addEventListener("zoomend", function () {
+		        setHotRadius(map, heatmapOverlay, map_zoom_level, hot_radius);
+		    });
+		    //根据层级动态调整热力图的半径
+			function setHotRadius(map, heatmapOverlay, map_zoom_level, hot_radius) {
+			    if (heatmapOverlay != null && heatmapOverlay != undefined) {
+			        var zoomDiff = map.getZoom() - map_zoom_level;
+			        if (zoomDiff > 0) {
+			            heatmapOverlay.setOptions({"radius": hot_radius * Math.pow(1.2, zoomDiff), "opacity": 0});
+			            //setGradient();
+			        } else if (zoomDiff < 0) {
+			            heatmapOverlay.setOptions({"radius": hot_radius * Math.pow(0.8, Math.abs(zoomDiff)), "opacity": 0});
+			            //setGradient();
+			        } else {
+			            heatmapOverlay.setOptions({"radius": hot_radius, "opacity": 0});
+			            //setGradient();
+			        }
+			    }
+			}
+			
+			function Convert_mapinfo_To_bd2(lng, lat) {
+			    var point = Convert_mapinfo_To_google(lng, lat);
+			    return Convert_GCJ02_To_BD09(point.lon, point.lat);
+			}
+		   
+		    if(!isSupportCanvas()){
+		    	alert('热力图目前只支持有canvas支持的浏览器,您所使用的浏览器不能使用热力图功能~')
+		    }
+		    var points = [];
+			heatmapOverlay = new BMapLib.HeatmapOverlay({"radius":80,"opacity":0});
+			map.addOverlay(heatmapOverlay);
+			heatmapOverlay.setDataSet({data:points,max:400});
+			heatmapOverlay.show();
+			setGradient();
+			
+		    function setGradient(){
+		     	var gradient = {
+		            .9: 'rgb(255,0,0)',
+		            .8: 'rgb(255,57,0)',
+		            .7: 'rgb(255,112,0)',
+		            .6: 'rgb(255,173,0)',
+		            .5: 'rgb(255,237,0)',
+					.4: 'rgb(209,232,0)',
+					.3: 'rgb(134,195,0)',
+					.2: 'rgb(60,158,0)',
+					.1: 'rgb(107,27,86)'
+		       };
+		        heatmapOverlay.setOptions({"gradient":gradient});
+		    }
+			//判断浏览区是否支持canvas
+		    function isSupportCanvas(){
+		        var elem = document.createElement('canvas');
+		        return !!(elem.getContext && elem.getContext('2d'));
+		    }
+		}
+	</script>
+</html>
